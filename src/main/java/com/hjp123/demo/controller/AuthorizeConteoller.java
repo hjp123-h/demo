@@ -1,7 +1,9 @@
 package com.hjp123.demo.controller;
 
+import com.hjp123.demo.bean.User;
 import com.hjp123.demo.dto.AccessTokenDTO;
 import com.hjp123.demo.dto.GithubUser;
+import com.hjp123.demo.mapper.UserMapper;
 import com.hjp123.demo.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +30,9 @@ public class AuthorizeConteoller {
     @Value("${Github.setRedirect.uri}")
     private String Uri;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
@@ -42,12 +47,23 @@ public class AuthorizeConteoller {
         //提交密钥
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         //解析用户数据
+        System.out.println(accessToken+" accessToken ");
         GithubUser user = githubProvider.getUser(accessToken);
+        System.out.println(user+" GithubUser");
         System.out.println(user.getName()+"====="+user.getId());
         if (user != null){
+            Long userid = user.getId();
+            User selectById = userMapper.selectById(userid);
+            if (selectById != null){
+                request.getSession().setAttribute("user",selectById);
+                System.out.println("登陆成功");
+                return "redirect:/";
+            }
+            User GithubUser = new User(userid, "Github用户" + userid, "Github" + userid, "GithubPassword" + userid);
             //登陆成功
-            request.getSession().setAttribute("user",user);
-            System.out.println("成功");
+            userMapper.increaseGithubUser(GithubUser);
+            request.getSession().setAttribute("user",GithubUser);
+            System.out.println("注册成功");
             return "redirect:/";
         }else{
             //登陆失败

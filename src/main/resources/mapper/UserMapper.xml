@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjp123.demo.mapper.UserMapper">
+
+    <insert id="increaseGithubUser">
+        INSERT INTO user(id,name,account,password) VALUE (#{id},#{name},#{account},#{password})
+        <selectKey resultType="Long" keyProperty="id" order="AFTER">
+            SELECT @@identity
+        </selectKey>
+    </insert>
+    <insert id="increaseUser">
+        INSERT INTO user(name,account,password) VALUE (#{name},#{account},#{password})
+        <selectKey resultType="Long" keyProperty="id" order="AFTER">
+            SELECT @@identity
+        </selectKey>
+    </insert>
+    <select id="selectById" resultType="com.hjp123.demo.bean.User">
+        SELECT id,name,account,password FROM user WHERE id=#{id}
+    </select>
+</mapper>

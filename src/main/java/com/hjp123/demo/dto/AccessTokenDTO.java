@@ -1,5 +1,7 @@
 package com.hjp123.demo.dto;
 
+import java.util.Objects;
+
 public class AccessTokenDTO {
     /**
      * Git返回用户密钥封装为类
@@ -49,5 +51,33 @@ public class AccessTokenDTO {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AccessTokenDTO that = (AccessTokenDTO) o;
+        return Objects.equals(client_id, that.client_id) &&
+                Objects.equals(client_secret, that.client_secret) &&
+                Objects.equals(code, that.code) &&
+                Objects.equals(redirect_uri, that.redirect_uri) &&
+                Objects.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(client_id, client_secret, code, redirect_uri, state);
+    }
+
+    @Override
+    public String toString() {
+        return "AccessTokenDTO{" +
+                "client_id='" + client_id + '\'' +
+                ", client_secret='" + client_secret + '\'' +
+                ", code='" + code + '\'' +
+                ", redirect_uri='" + redirect_uri + '\'' +
+                ", state='" + state + '\'' +
+                '}';
     }
 }

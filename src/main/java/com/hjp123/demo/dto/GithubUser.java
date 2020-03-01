@@ -36,27 +36,4 @@ public class GithubUser {
         this.bio = bio;
     }
 
-    @Override
-    public String toString() {
-        return "GithubUser{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", bio='" + bio + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GithubUser that = (GithubUser) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(bio, that.bio);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, id, bio);
-    }
 }

@@ -11,7 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @Controller
 public class AuthorizeConteoller {
@@ -36,38 +39,47 @@ public class AuthorizeConteoller {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           HttpServletRequest request){
+                           HttpServletRequest request, HttpServletResponse httpServletResponse){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(Clientid);
         accessTokenDTO.setClient_secret(Secret);
         accessTokenDTO.setCode(code);
         accessTokenDTO.setRedirect_uri(Uri);
         accessTokenDTO.setState(state);
-        System.out.println(accessTokenDTO);
         //提交密钥
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         //解析用户数据
-        System.out.println(accessToken+" accessToken ");
+        //将token传入 获得用户数据
         GithubUser user = githubProvider.getUser(accessToken);
-        System.out.println(user+" GithubUser");
-        System.out.println(user.getName()+"====="+user.getId());
+        //判断是否登陆Github成功
         if (user != null){
-            Long userid = user.getId();
-            User selectById = userMapper.selectById(userid);
-            if (selectById != null){
-                request.getSession().setAttribute("user",selectById);
-                System.out.println("登陆成功");
+            //查询这个token是否注册过
+            User selectByToken = userMapper.selectById(user.getId());
+            if (selectByToken != null){
+                //更新数据库数据
+                Long userid = user.getId();
+                User GithubUser = new User(userid, "Github用户" + userid, "Github" + userid, "GithubPassword" + userid, UUID.randomUUID().toString());
+                userMapper.updateUser(GithubUser);
+                //返回token
+                Cookie cookie = new Cookie("token", GithubUser.getToken());
+                cookie.setMaxAge(3600);
+                httpServletResponse.addCookie(cookie);
+
                 return "redirect:/";
             }
-            User GithubUser = new User(userid, "Github用户" + userid, "Github" + userid, "GithubPassword" + userid);
-            //登陆成功
+            //获取id 创建user对象
+            Long userid = user.getId();
+            User GithubUser = new User(userid, "Github用户" + userid, "Github" + userid, "GithubPassword" + userid, UUID.randomUUID().toString());
+
+            //注册成功 放到数据库
             userMapper.increaseGithubUser(GithubUser);
-            request.getSession().setAttribute("user",GithubUser);
-            System.out.println("注册成功");
+            //返回cookie
+            Cookie cookie = new Cookie("token", GithubUser.getToken());
+            cookie.setMaxAge(3600);
+            httpServletResponse.addCookie(cookie);
             return "redirect:/";
         }else{
             //登陆失败
-            System.out.println("失败");
             return "redirect:/";
         }
     }

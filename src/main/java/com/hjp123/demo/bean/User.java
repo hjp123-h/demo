@@ -6,8 +6,17 @@ public class User {
     private String name;
     private String account;
     private String password;
+    private String token;
 
     public User() {
+    }
+
+    public User(Long id, String name, String account, String password, String token) {
+        this.id = id;
+        this.name = name;
+        this.account = account;
+        this.password = password;
+        this.token = token;
     }
 
     public User(String name, String account, String password) {
@@ -22,6 +31,14 @@ public class User {
         this.name = name;
         this.account = account;
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Long getId() {

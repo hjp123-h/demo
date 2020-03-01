@@ -6,9 +6,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    Long increaseGithubUser(User user);
+    void increaseGithubUser(User user);
 
     Long increaseUser(User user);
 
+    User selectByToken(String token);
+
     User selectById(Long id);
+
+    void updateUser(User user);
 }

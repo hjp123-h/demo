@@ -6,10 +6,7 @@
 <mapper namespace="com.hjp123.demo.mapper.UserMapper">
 
     <insert id="increaseGithubUser">
-        INSERT INTO user(id,name,account,password) VALUE (#{id},#{name},#{account},#{password})
-        <selectKey resultType="Long" keyProperty="id" order="AFTER">
-            SELECT @@identity
-        </selectKey>
+        INSERT INTO user(id,token,name,account,password) VALUE (#{id},#{token},#{name},#{account},#{password})
     </insert>
     <insert id="increaseUser">
         INSERT INTO user(name,account,password) VALUE (#{name},#{account},#{password})
@@ -17,7 +14,17 @@
             SELECT @@identity
         </selectKey>
     </insert>
-    <select id="selectById" resultType="com.hjp123.demo.bean.User">
-        SELECT id,name,account,password FROM user WHERE id=#{id}
+
+    <select id="selectByToken" resultType="com.hjp123.demo.bean.User">
+        SELECT id,token,name,account,password FROM user WHERE token=#{token}
     </select>
+
+    <select id="selectById" resultType="com.hjp123.demo.bean.User">
+        SELECT id,token,name,account,password FROM user WHERE id=#{id}
+    </select>
+
+    <update id="updateUser">
+        UPDATE user SET id=#{id},token=#{token},name=#{name},account=#{account},password=#{password} WHERE id=#{id}
+    </update>
+
 </mapper>

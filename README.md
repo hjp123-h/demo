@@ -12,11 +12,7 @@ git clone
 
 3. 修改数据库配置文件
 ````
-spring.datasource.username=root
-spring.datasource.password=root
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql://localhost:3306/datasource_table?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone= Asia/Shanghai 
-spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+
 ````
 4. 运行打包命令
 ````

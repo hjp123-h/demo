@@ -15,4 +15,6 @@ public interface UserMapper {
     User selectById(Long id);
 
     void updateUser(User user);
+
+    User selectNamePassword(String account,String password);
 }

@@ -5,19 +5,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/community.css">
     <script src="js/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
-        <div class="container-fluid">
-
+    <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">韩佳鹏的社区</span>
+                <span class="sr-only">发布</span>
             </button>
             <a class="navbar-brand" href="#">韩佳鹏的社区</a>
         </div>
@@ -41,50 +40,49 @@
                     </ul>
                 </li>
                 <li th:if="${session.user == null}">
-                    <a class="navbar-brand" href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">登陆</a>
+                    <a th:href="|https://github.com/login/oauth/authorize?client_id=${clientid}&redirect_uri=${uri}&scope=user&state=1|">登陆</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
-<!--遮罩窗体-->
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form id="form1" >
-                    <div class="modal-header">
-                        <h3 class="modal-title text-center" id="exampleModalLabel">LOGO</h3>
-                    </div>
-
-                    <div id="divseccid" class="form-group">
-                        <label class="control-label" for="userName" id="labeluser" name="labeluser" ></label>
-                        <input type="text" class="form-control" id="userName" name="userName" aria-describedby="inputSuccess2Status" placeholder="请输入账号" >
-                        <span id="spanseccid" aria-hidden="true"></span>
-
-                    </div>
-
-                    <div id="divseccid1" class="form-group">
-                        <label class="control-label" for="password"></label>
-                        <input type="password" class="form-control" id="password" name="password" aria-describedby="inputSuccess2Status" placeholder="请输入密码" >
-                        <span id="spanseccid1" aria-hidden="true"></span>
-                    </div>
-
-                    <h5 class="text-right"><a href="/regist">注册>></a></h5>
-                    <button id="submitBtn" type="button" class="btn btn-success btn-block btn-primary input-lg" ><h4>登录</h4>
-                    </button>
-                </form>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>发起</h2>
+            <hr>
+            <form>
+                <div class="form-group">
+                    <label for="title">问题标题（简单扼要）：</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题...">
+                </div>
+                <div class="form-group">
+                    <label for="title">问题补充（必填，请参照右侧提示）：</label>
+                    <textarea name="description" id="description" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tag">添加标签：</label>
+                    <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以，号分隔"><br>
+                    <button type="button" class="btn btn-success btu-pulish" >发布</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <!--提示框-->
+            <div class="col-md-12 col-sm-12 col-xs-12 column">
+                <h3>问题发起指南</h3>
+                <hr>
+                <h4>·问题标题：</h4><h5>请用精简的语言描述您发布的问题，不超过25个字.</h5>
+                <hr>
+                <h4>·问题补充：</h4><h5>详细补充您的问题内容，确保问题描述清晰直观，并提供一些相关的资料.</h5>
+                <hr>
+                <h4>·选择标签:</h4><h5>选择一个或多个合适的标签，用逗号隔开，每个标签不超过10个字.</h5>
+                <hr>
             </div>
-            <div class="modal-footer">
-                <h5 class="text-center"><a th:href="|https://github.com/login/oauth/authorize?client_id=${clientid}&redirect_uri=${uri}&scope=user&state=1|">Github登陆</a></h5>
-            </div>
-
         </div>
     </div>
 </div>
 
+</div>
 </body>
-<script src="js/login.js"></script>
 </html>

@@ -22,12 +22,21 @@
     <select id="selectById" resultType="com.hjp123.demo.bean.User">
         SELECT id,token,name,account,password FROM user WHERE id=#{id}
     </select>
+
     <select id="selectNamePassword" resultType="com.hjp123.demo.bean.User">
         SELECT id,token,name,account,password FROM user WHERE account=#{account} AND password=#{password}
+    </select>
+
+    <select id="selectName" resultType="com.hjp123.demo.bean.User">
+         SELECT id,token,name,account,password FROM user WHERE account=#{account}
     </select>
 
     <update id="updateUser">
         UPDATE user SET id=#{id},token=#{token},name=#{name},account=#{account},password=#{password} WHERE id=#{id}
     </update>
+
+    <insert id="addUser">
+        INSERT INTO user(token,name,account,password) VALUE (#{token},#{name},#{account},#{password})
+    </insert>
 
 </mapper>

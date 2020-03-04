@@ -9,12 +9,17 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Post请求类（未理解）
+ */
+
 @Component
 public class GithubProvider {
 
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
+        //设置格式
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
-
+        //设定网络超时事件
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)

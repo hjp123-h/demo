@@ -23,7 +23,7 @@ public class AuthorizeConteoller {
     private GithubProvider githubProvider;
 
     /**
-     * 用来向接收Github发送过来的用户密钥
+     * Github类
      */
 
     @Value("${Github.setClient.id}")
@@ -53,7 +53,7 @@ public class AuthorizeConteoller {
         GithubUser user = githubProvider.getUser(accessToken);
         //判断是否登陆Github成功
         if (user != null){
-            //查询这个token是否注册过
+            //查询这个id是否注册过
             User selectByToken = userMapper.selectById(user.getId());
             if (selectByToken != null){
                 //更新数据库数据

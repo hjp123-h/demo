@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
+    <title>文章发布</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -11,6 +11,7 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
+<!-- 导航栏 -->
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -18,7 +19,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">发布</span>
             </button>
-            <a class="navbar-brand" href="#">韩佳鹏的社区</a>
+            <a class="navbar-brand" href="/">好好学习每一天</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -30,6 +31,9 @@
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
+                <li  th:if="${session.user !=null}">
+                    <a href="/" class="glyphicon glyphicon-home">主页</a>
+                </li>
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
@@ -40,30 +44,44 @@
                     </ul>
                 </li>
                 <li th:if="${session.user == null}">
-                    <a th:href="|https://github.com/login/oauth/authorize?client_id=${clientid}&redirect_uri=${uri}&scope=user&state=1|">登陆</a>
+                    <a class="navbar-brand" href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" id="loginuser" name="loginuser">登陆</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- 发布页面 -->
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>发起</h2>
+
+            <li th:if="${error != null}">
+                <div class="alert alert-danger" role="alert">请先登陆账号</div>
+            </li>
+            <li th:if="${titleError != null}">
+                <div class="alert alert-danger" role="alert">问题标题不能为空</div>
+            </li>
+            <li th:if="${supplementError != null}">
+                <div class="alert alert-danger" role="alert">问题补充不能为空</div>
+            </li>
+
+
             <hr>
-            <form>
+            <form action="/publish" method="post">
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）：</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="问题标题...">
                 </div>
                 <div class="form-group">
                     <label for="title">问题补充（必填，请参照右侧提示）：</label>
-                    <textarea name="description" id="description" class="form-control" rows="3"></textarea>
+                    <textarea name="description" id="description" class="form-control" rows="10"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
                     <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以，号分隔"><br>
-                    <button type="button" class="btn btn-success btu-pulish" >发布</button>
+                    <button type="submit" class="btn btn-success btu-pulish" >发布</button>
                 </div>
             </form>
         </div>
@@ -83,6 +101,48 @@
     </div>
 </div>
 
+<!--遮罩窗体-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="form1" >
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="exampleModalLabel">LOGO</h3>
+                    </div>
+
+                    <div id="divseccid" class="form-group">
+                        <label class="control-label" for="userName" id="labeluser" name="labeluser" ></label>
+                        <input type="text" class="form-control" id="userName" name="userName" aria-describedby="inputSuccess2Status" placeholder="请输入账号" >
+                        <span id="spanseccid" aria-hidden="true"></span>
+
+                    </div>
+
+                    <div id="divseccid1" class="form-group">
+                        <label class="control-label" for="password"></label>
+                        <input type="password" class="form-control" id="password" name="password" aria-describedby="inputSuccess2Status" placeholder="请输入密码" >
+                        <span id="spanseccid1" aria-hidden="true"></span>
+                    </div>
+
+                    <h5 class="text-right"><a href="/registjump" >注册>></a></h5>
+                    <button id="submitBtn" type="button" class="btn btn-success btn-block btn-primary input-lg" ><h4>登录</h4>
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <h5 class="text-center"><a th:href="|https://github.com/login/oauth/authorize?client_id=${clientid}&redirect_uri=${uri}&scope=user&state=1|">Github登陆</a></h5>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<!-- 页脚备案 -->
+<footer class="navbar navbar-fixed-bottom text-center">
+    <hr>
+    <p class="text-nowrap"> 豫ICP备20005119号</p>
+</footer>
 </body>
+<script src="js/login.js"></script>
 </html>

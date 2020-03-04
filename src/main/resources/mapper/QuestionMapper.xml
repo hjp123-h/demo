@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjp123.demo.mapper.QuesstionMapper">
+
+    <resultMap type="Question" id="questionResultMap">
+        <!-- 定义主键 ,非常重要。如果是多个字段,则定义多个id -->
+        <!-- property：主键在pojo中的属性名 -->
+        <!-- column：主键在数据库中的列名 -->
+        <id property="id" column="id" />
+
+        <!-- 定义普通属性 -->
+        <result property="title" column="title" />
+        <result property="description" column="description" />
+        <result property="gmtCreate" column="gmt_create" />
+        <result property="gmtModified" column="gmt_modified" />
+        <result property="creator" column="creator" />
+        <result property="commentCount" column="comment_count" />
+        <result property="viewCount" column="view_count" />
+        <result property="likeCount" column="like_count" />
+        <result property="tag" column="tag" />
+    </resultMap>
+
+    <insert id="increaseQuestion">
+        insert into question (title,description,gmt_create,gmt_modified,creator,tag) values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})
+    </insert>
+    <select id="selectAll" resultMap="questionResultMap">
+        SELECT * FROM question
+    </select>
+</mapper>

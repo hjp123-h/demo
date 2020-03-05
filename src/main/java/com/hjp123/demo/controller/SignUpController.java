@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +90,11 @@ public class SignUpController {
      */
 
     @RequestMapping(value = "/regist",method = RequestMethod.POST)
-    String regist(String username,String password,HttpServletResponse response, RedirectAttributes redirectAttributes,Model model) {
+    String regist(String username,
+                  String password,
+                  HttpServletResponse response,
+                  RedirectAttributes redirectAttributes,
+                  Model model) {
         //用post传递 获取账号密码
         String userName = username;
         String passWord = password;
@@ -116,6 +121,26 @@ public class SignUpController {
         }
 
         return "regist";
+    }
+
+    /**
+     * 注销方法
+     */
+
+    @RequestMapping("/destroyCookie")
+    public String destroyCookie(@CookieValue("token") Cookie userCookie,
+                                HttpServletResponse response,
+                                HttpServletRequest request,
+                                RedirectAttributes redirectAttributes) {
+        //干掉cookie
+        userCookie.setMaxAge(0);
+        userCookie.setPath("/");
+        response.addCookie(userCookie);
+        //干掉session
+        HttpSession session = request.getSession();
+        session.invalidate();
+        redirectAttributes.addFlashAttribute("destroyCookie","退出登陆成功");
+        return "redirect:/";
     }
 
 }

@@ -2,6 +2,7 @@ package com.hjp123.demo.controller;
 
 import com.hjp123.demo.bean.Question;
 import com.hjp123.demo.bean.User;
+import com.hjp123.demo.dto.PaginationDTO;
 import com.hjp123.demo.dto.QuestionDTO;
 import com.hjp123.demo.mapper.QuesstionMapper;
 import com.hjp123.demo.mapper.UserMapper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +36,10 @@ public class IndexController {
     private QuestionService questionService;
 
     @RequestMapping("/")
-    public String hello(Model model, HttpServletRequest httpServletRequest){
+    public String hello(Model model,
+                        HttpServletRequest httpServletRequest,
+                        @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "size", defaultValue = "7") Integer size){
 
         //传递登陆Github参数
         model.addAttribute("uri",uri);
@@ -65,8 +70,8 @@ public class IndexController {
         }
 
         //获取全部文章
-        List<QuestionDTO> questionList = questionService.selectAll();
-        model.addAttribute("questionList",questionList);
+        PaginationDTO pagination = questionService.selectAll(page,size);
+        model.addAttribute("pagination",pagination);
         return "index";
     }
 

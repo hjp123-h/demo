@@ -44,11 +44,16 @@
                 </li>
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
+                       aria-expanded="false" >
+                        <span th:text="${session.user.getName()}"></span>
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">消息中心</a></li>
+                        <li><a href="/profile/questions">我的问题</a></li>
                         <li><a href="#">个人资料</a></li>
                         <li><a href="/destroyCookie">推出登陆</a></li>
+                        <li class="divider"></li>
+                        <li><a th:text="'欢迎回来：'+${session.user.name}">欢迎回来:</a></li>
                     </ul>
                 </li>
                 <li th:if="${session.user == null}">
@@ -74,7 +79,7 @@
 
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 a-right">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span>&nbsp;&nbsp;发现</h2>
             <hr>
             <div class="media" th:each="question : ${pagination.questionDTOS}">
@@ -93,12 +98,13 @@
                         <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-d HH:mm')}"></span>发布
                     </span>
                 </div>
+                <hr>
             </div>
 
             <!-- 分页 -->
-            <nav aria-label="Page navigation">
+            <nav aria-label="Page navigation" style="text-align: center">
 
-                <ul class="pagination">
+                <ul class="pagination pagination-lg">
 
                     <li th:if="${pagination.showFirstPage}">
                         <a href="/?page=1" aria-label="Previous">
@@ -129,46 +135,15 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <h3>热门话题</h3>
+            <hr>
+            <img src="images/1.PNG" width="200">
+            <img src="images/2.PNG" width="200">
         </div>
     </div>
 </div>
 
 <!--遮罩窗体-->
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form id="form1" >
-                    <div class="modal-header">
-                        <h3 class="modal-title text-center" id="exampleModalLabel">LOGO</h3>
-                    </div>
-
-                    <div id="divseccid" class="form-group">
-                        <label class="control-label" for="userName" id="labeluser" name="labeluser" ></label>
-                        <input type="text" class="form-control" id="userName" name="userName" aria-describedby="inputSuccess2Status" placeholder="请输入账号" >
-                        <span id="spanseccid" aria-hidden="true"></span>
-
-                    </div>
-
-                    <div id="divseccid1" class="form-group">
-                        <label class="control-label" for="password"></label>
-                        <input type="password" class="form-control" id="password" name="password" aria-describedby="inputSuccess2Status" placeholder="请输入密码" >
-                        <span id="spanseccid1" aria-hidden="true"></span>
-                    </div>
-
-                    <h5 class="text-right"><a href="/registjump" >注册>></a></h5>
-                    <button id="submitBtn" type="button" class="btn btn-success btn-block btn-primary input-lg" ><h4>登录</h4>
-                    </button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <h5 class="text-center"><a th:href="|https://github.com/login/oauth/authorize?client_id=${clientid}&redirect_uri=${uri}&scope=user&state=1|">Github登陆</a></h5>
-            </div>
-
-        </div>
-    </div>
-</div>
+<div th:insert="modeltion :: nav"></div>
 
 <!-- 页脚备案 -->
 <div class="div_foot">

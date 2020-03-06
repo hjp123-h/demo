@@ -21,3 +21,11 @@ body{
     font-weight: normal;
     color: #999;
 }
+.proflie .sectiom{
+    margin-top: 15px;
+}
+.a-right{
+    border-right:1px solid #dbddd3;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

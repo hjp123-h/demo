@@ -111,7 +111,7 @@ public class QuestionService {
         if (question.getId() == null){
             //记录创建时间
             question.setGmtCreate(System.currentTimeMillis());
-            question.setGmtModified(question.getGmtCreate());
+            question.setGmtModified(System.currentTimeMillis());
             //插入数据
             quesstionMapper.increaseQuestion(question);
         }else {

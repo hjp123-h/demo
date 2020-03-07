@@ -1,32 +1,22 @@
 ## hjp123的java社区
 
-## 快速运行
-1. 安装必备工具  
-````
-JDK，Maven
-````
-2. 克隆代码到本地
-````
-git clone
-````
 
-3. 修改数据库配置文件
-````
+## 更新日志
+v0.4.3：更新了问题正文页面，用户可以修改问题，优化了一些代码。
 
-````
-4. 运行打包命令
-````
-mvn package
-````
-5. 运行项目  
-````
-java -jar /user/project/demo.jar
-````
-6. 访问项目
-````
-http://localhost:8088
-````
+v0.4.2：更新了我的问题功能，优化了一些界面设置。
 
+v0.4.1：更新了分页功能，账号退出功能。
+
+v0.4；更新注册功能，功能文章发布功能，优化了提示信息。
+
+v0.3.1：优化了登陆窗口，支持账号密码登陆。
+
+v0.3：彻底修复了Github登陆功能。
+
+v0.2：完善了Github登陆功能，并链接数据库。
+
+v0.1：增加了Github登陆。
 
 ## 资料
 [Spring 文档](https://spring.io/guides)    
@@ -46,23 +36,3 @@ http://localhost:8088
 [Lombok](https://www.projectlombok.org)     
 [Postman](https://chrome.google.com/webstore/detail/coohjcphdfgbiolnekdpbcijmhambjff)
 
-## 脚本
-````
-sql_建表
-
-````
-
-## 更新日志
-v0.4.2:更新了我的问题功能，优化了一些界面设置。
-
-v0.4.1：更新了分页功能，账号退出功能。
-
-v0.4；更新注册功能，功能文章发布功能，优化了提示信息。
-
-v0.3.1：优化了登陆窗口，支持账号密码登陆。
-
-v0.3：彻底修复了Github登陆功能。
-
-v0.2：完善了Github登陆功能，并链接数据库。
-
-v0.1：增加了Github登陆。

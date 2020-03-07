@@ -23,27 +23,6 @@ public class SignUpController {
     @Autowired
     private UserMapper userMapper;
 
-    /*
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String LoginUser(String name , String password, HttpServletResponse httpServletResponse){
-        System.out.println(name+" "+password);
-        if (name != null && password != null){
-            User user = userMapper.selectNamePassword(name, password);
-            if(user != null){
-                Long userid = user.getId();
-                System.out.println(user);
-                User GithubUser = new User(userid, user.getName(), user.getAccount(), user.getPassword(),UUID.randomUUID().toString());
-                userMapper.updateUser(GithubUser);
-                //返回token
-                Cookie cookie = new Cookie("token", GithubUser.getToken());
-                cookie.setMaxAge(3600);
-                httpServletResponse.addCookie(cookie);
-                return "redirect:/";
-            }
-        }
-        return "redirect:/";
-    }*/
-
     /**
      *使用Ajax登陆
      * @ResponseBody能将返回字符串转为json格式
@@ -132,11 +111,11 @@ public class SignUpController {
                                 HttpServletResponse response,
                                 HttpServletRequest request,
                                 RedirectAttributes redirectAttributes) {
-        //干掉cookie
+        //消除cookie
         userCookie.setMaxAge(0);
         userCookie.setPath("/");
         response.addCookie(userCookie);
-        //干掉session
+        //消除session
         HttpSession session = request.getSession();
         session.invalidate();
         redirectAttributes.addFlashAttribute("destroyCookie","退出登陆成功");

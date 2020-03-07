@@ -3,10 +3,12 @@ package com.hjp123.demo.controller;
 import com.hjp123.demo.bean.Question;
 import com.hjp123.demo.bean.User;
 import com.hjp123.demo.mapper.QuesstionMapper;
+import com.hjp123.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,6 +21,9 @@ public class PublishController {
 
     @Autowired
     private QuesstionMapper quesstionMapper;
+
+    @Autowired
+    private QuestionService questionService;
 
     /**
      * 进入注册页面类
@@ -37,6 +42,7 @@ public class PublishController {
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("tag") String tag,
+            @RequestParam(value = "id",required = false) Integer id,
             HttpServletRequest httpServletRequest,
             RedirectAttributes redirectAttributes,
             Model model) {
@@ -57,11 +63,10 @@ public class PublishController {
                     User user = (User) object;
                     //取出user中数据 放入Qusetion中
                     question.setCreator(user.getId());
-                    question.setGmtCreate(System.currentTimeMillis());
-                    question.setGmtModified(question.getGmtCreate());
+                    question.setId(id);
 
-                    //将正文内容插入数据库
-                    quesstionMapper.increaseQuestion(question);
+                    //将正文内容插传入service
+                    questionService.increaseQuestion(question);
                     //调用RedirectAttributes类放入成功信息 用于重定向传递数据 Model无法重定向传递数据
                     redirectAttributes.addFlashAttribute("Publishseccuse", "发布成功");
                     return "redirect:/";
@@ -79,6 +84,17 @@ public class PublishController {
             model.addAttribute("titleError", "标题不能为空");
             return "publish";
         }
+    }
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id")Long id,
+                       Model model){
+        Question question = quesstionMapper.getById(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tag",question.getTag());
+        model.addAttribute("id",question.getId());
+        return "publish";
     }
 }
 

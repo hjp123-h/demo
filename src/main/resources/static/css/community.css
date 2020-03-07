@@ -24,8 +24,22 @@ body{
 .proflie .sectiom{
     margin-top: 15px;
 }
+.div_foot {
+    position: absolute;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    width: 100%;
+}
 .a-right{
     border-right:1px solid #dbddd3;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.a-bottom{
+    border-bottom:1px solid #dbddd3;
+    margin-bottom: 10px;
+}
+.community-menu{
+    color: #999;
 }

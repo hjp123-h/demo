@@ -31,43 +31,16 @@ public class IndexController {
     private String uri;
 
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private QuestionService questionService;
 
     @RequestMapping("/")
     public String hello(Model model,
-                        HttpServletRequest httpServletRequest,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "7") Integer size){
 
         //传递登陆Github参数
         model.addAttribute("uri",uri);
         model.addAttribute("clientid",Clientid);
-
-        //获取前端cookie
-        Cookie[] cookies = httpServletRequest.getCookies();
-        //判断cookies是否为空
-        if (cookies != null){
-            //遍历这个cookie
-            for (Cookie cookie:cookies) {
-                if (cookie.getName().equals("token")){
-                    //获取这个cookie中的id
-                    String value = cookie.getValue();
-
-                    //进入数据库查询 获得对象
-                    User user = userMapper.selectByToken(value);
-
-                    //判断对象不为空的情况下 放入session
-                    if(user != null){
-
-                        httpServletRequest.getSession().setAttribute("user",user);
-                    }
-                    break;
-                }
-
-            }
-        }
 
         //获取全部文章
         PaginationDTO pagination = questionService.selectAll(page,size);

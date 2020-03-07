@@ -7,6 +7,7 @@ import com.hjp123.demo.dto.QuestionDTO;
 import com.hjp123.demo.mapper.QuesstionMapper;
 import com.hjp123.demo.mapper.UserMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,64 @@ public class QuestionService {
 
         paginationDTO.setQuestionDTOS(questionDTOS);
         return paginationDTO;
+    }
+
+    public PaginationDTO selectAll(Long userId, Integer page, Integer size) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        Integer totalCount = quesstionMapper.count();
+        paginationDTO.setPagination(totalCount, page, size);
+
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > paginationDTO.getTotalPage()) {
+            page = paginationDTO.getTotalPage();
+        }
+        //size*(page-1)
+        Integer offset = size * (page - 1);
+        List<Question> questions = quesstionMapper.selectAllByid(userId,offset, size);
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+
+
+        questions.forEach(i -> {
+            User user = userService.findUserById(i.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(i, questionDTO);
+            questionDTO.setUser(user);
+            questionDTOList.add(questionDTO);
+        });
+        paginationDTO.setQuestionDTOS(questionDTOList);
+        return paginationDTO;
+    }
+
+    //根据问题id返回问题详情
+    public QuestionDTO getId(Long id) {
+        //找到问题详情
+        Question question = quesstionMapper.getById(id);
+        //根据问题创建者id找到用户id
+        User user = userService.findUserById(question.getCreator());
+        QuestionDTO questionDTO = new QuestionDTO();
+        //用户信息写入DTO中
+        questionDTO.setUser(user);
+        //问题信息拷贝到DTO中
+        BeanUtils.copyProperties(question,questionDTO);
+        return questionDTO;
+
+    }
+
+    //根据id判断文章是否存在
+    public void increaseQuestion(Question question) {
+        if (question.getId() == null){
+            //记录创建时间
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            //插入数据
+            quesstionMapper.increaseQuestion(question);
+        }else {
+            //记录更新时间
+            question.setGmtModified(System.currentTimeMillis());
+            //更新数据
+            quesstionMapper.update(question);
+        }
     }
 }

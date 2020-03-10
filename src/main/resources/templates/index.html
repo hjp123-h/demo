@@ -65,6 +65,9 @@
 <li th:if="${destroyCookie != null}">
     <div class="alert alert-success" role="alert">退出登录成功</div>
 </li>
+<li th:if="${delete != null}">
+    <div class="alert alert-warning" role="alert" th:text="${delete}"></div>
+</li>
 
 <!-- 文章显示区域 -->
 

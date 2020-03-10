@@ -24,6 +24,8 @@ public class QuestionController {
                            Model model){
         //根据问题id获取问题详情
         QuestionDTO questionDTO = questionService.getId(id);
+        //更新浏览数
+        questionService.incView(id);
         //将问题详情传入model
         model.addAttribute("question",questionDTO);
         return "question";

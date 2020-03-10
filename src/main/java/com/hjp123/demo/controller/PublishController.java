@@ -88,13 +88,55 @@ public class PublishController {
 
     @GetMapping("/publish/{id}")
     public String edit(@PathVariable(name = "id")Long id,
+                       RedirectAttributes redirectAttributes,
+                       HttpServletRequest httpServletRequest,
                        Model model){
-        Question question = quesstionMapper.getById(id);
-        model.addAttribute("title",question.getTitle());
-        model.addAttribute("description",question.getDescription());
-        model.addAttribute("tag",question.getTag());
-        model.addAttribute("id",question.getId());
-        return "publish";
+        //获取session中用户
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        if (user != null ){
+            //根据传入id查询出文章信息
+            Question question_user = quesstionMapper.getById(id);
+            //获取文章作者id
+            Long questionId = question_user.getCreator();
+            //获取用户session中对应的id
+            Long userId = user.getId();
+            //验证两者是否相等
+            if (question_user != null && userId.equals(questionId)){
+                //根据文章id向修改页面写入数据
+                model.addAttribute("title",question_user.getTitle());
+                model.addAttribute("description",question_user.getDescription());
+                model.addAttribute("tag",question_user.getTag());
+                model.addAttribute("id",question_user.getId());
+                return "publish";
+            }
+        }
+        redirectAttributes.addFlashAttribute("delete","出现了一些问题，修改失败");
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable(name = "id")Long id,
+                         RedirectAttributes redirectAttributes,
+                         HttpServletRequest httpServletRequest){
+        //获取session中用户
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        if (user != null ){
+            //根据传入id查询出文章信息
+            Question question = quesstionMapper.getById(id);
+            //获取文章作者id
+            Long questionId = question.getCreator();
+            //获取用户session中对应的id
+            Long userId = user.getId();
+            //验证两者是否相等
+            if (question != null && userId.equals(questionId)){
+                //删除文章
+                quesstionMapper.deleteId(id);
+                redirectAttributes.addFlashAttribute("delete","删除成功");
+                return "redirect:/";
+            }
+        }
+        redirectAttributes.addFlashAttribute("delete","出现了一些问题，删除失败");
+        return "redirect:/";
     }
 }
 

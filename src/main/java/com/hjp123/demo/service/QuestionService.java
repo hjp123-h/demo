@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -120,5 +121,9 @@ public class QuestionService {
             //更新数据
             quesstionMapper.update(question);
         }
+    }
+    //增加阅读数
+    public void incView(Long id) {
+       quesstionMapper.viewId(id);
     }
 }

@@ -28,4 +28,8 @@ public interface QuesstionMapper {
 
     //更新文章
     void update(Question question);
+
+    void viewId(Long id);
+
+    void deleteId(Long id);
 }

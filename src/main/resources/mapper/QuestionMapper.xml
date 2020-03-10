@@ -27,6 +27,23 @@
     <insert id="increaseQuestion">
         insert into question (title,description,gmt_create,gmt_modified,creator,tag) values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})
     </insert>
+
+    <!-- 更新文章 -->
+    <update id="update">
+         UPDATE question set  title=#{title} , description=#{description} , gmt_modified=#{gmtModified} , tag=#{tag} where id=#{id}
+    </update>
+
+    <!-- 更新浏览数 -->
+    <update id="viewId">
+        UPDATE question set view_count = view_count + 1 WHERE id = #{id}
+    </update>
+
+    <!-- 删除文章 -->
+    <delete id="deleteId">
+        DELETE from question where id = #{id};
+    </delete>
+
+    <!-- 分页查询 -->
     <select id="selectAll" resultMap="questionResultMap">
         SELECT * FROM question
     </select>

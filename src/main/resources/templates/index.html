@@ -91,6 +91,7 @@
                         <span th:text="${question.user.name}"> </span> ●
                         <span th:text="${question.getCommentCount()}"> </span>个回复 ●
                         <span th:text="${question.getViewCount()}"></span>次浏览 ●
+                        <span th:text="${question.getLikeCount()}"></span>次点赞 ●
                         <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-d HH:mm')}"></span>发布
                     </span>
                 </div>

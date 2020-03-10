@@ -38,6 +38,16 @@
         UPDATE question set view_count = view_count + 1 WHERE id = #{id}
     </update>
 
+    <!-- 增加点赞数 -->
+    <update id="likesAdd">
+        UPDATE question set like_count = like_count + 1 WHERE id = #{id}
+    </update>
+
+    <!-- 减少点赞数 -->
+    <update id="likesDelete">
+        UPDATE question set like_count = like_count - 1 WHERE id = #{id}
+    </update>
+
     <!-- 删除文章 -->
     <delete id="deleteId">
         DELETE from question where id = #{id};

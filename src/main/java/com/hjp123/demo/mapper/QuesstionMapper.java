@@ -29,7 +29,15 @@ public interface QuesstionMapper {
     //更新文章
     void update(Question question);
 
+    //增加浏览数
     void viewId(Long id);
 
+    //增加点赞数
+    void likesAdd(Long id);
+
+    //删除文章
     void deleteId(Long id);
+
+    //减少点赞数
+    void likesDelete(Long articleId);
 }

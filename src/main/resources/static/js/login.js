@@ -57,3 +57,16 @@ $("#form1").on("click",".btn",function(e){
     }
 
 })
+
+//点赞系统
+$("#likesbtu").click(function () {
+    $.ajax({
+        url:"/likes/addlikes",
+        type:"post",
+        data:{"articleId":$("#questionId").val()},
+        dataType:"json",
+        success:function(result){
+            window.location.replace("/question/"+$("#questionId").val());
+        }
+    })
+});

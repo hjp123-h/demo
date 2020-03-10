@@ -4,6 +4,7 @@ import com.hjp123.demo.bean.Question;
 import com.hjp123.demo.bean.User;
 import com.hjp123.demo.dto.PaginationDTO;
 import com.hjp123.demo.dto.QuestionDTO;
+import com.hjp123.demo.mapper.LikeMapper;
 import com.hjp123.demo.mapper.QuesstionMapper;
 import com.hjp123.demo.mapper.UserMapper;
 import com.hjp123.demo.service.QuestionService;

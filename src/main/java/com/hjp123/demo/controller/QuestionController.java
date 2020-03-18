@@ -2,9 +2,11 @@ package com.hjp123.demo.controller;
 
 import com.hjp123.demo.bean.Likes;
 import com.hjp123.demo.bean.User;
+import com.hjp123.demo.dto.CommentDTO;
 import com.hjp123.demo.dto.QuestionDTO;
 import com.hjp123.demo.mapper.LikeMapper;
 import com.hjp123.demo.mapper.QuesstionMapper;
+import com.hjp123.demo.service.CommentService;
 import com.hjp123.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 进入指定问题页面类
@@ -25,6 +28,8 @@ public class QuestionController {
     private QuestionService questionService;
     @Autowired
     private LikeMapper likeMapper;
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Long id,
@@ -51,8 +56,11 @@ public class QuestionController {
             }
         }
 
+        List<CommentDTO> commentDTOS = commentService.listByQuestionId(id,1);
+
         //将问题详情传入model
         model.addAttribute("question",questionDTO);
+        model.addAttribute("comments",commentDTOS);
         return "question";
     }
 }

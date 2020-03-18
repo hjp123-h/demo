@@ -46,3 +46,8 @@ body{
 .jumbotron{
     margin: 50px;
 }
+.xiaoyi-div{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}

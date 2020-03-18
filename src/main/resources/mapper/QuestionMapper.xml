@@ -48,6 +48,11 @@
         UPDATE question set like_count = like_count - 1 WHERE id = #{id}
     </update>
 
+    <!-- 增加回复数 -->
+    <update id="commentAdd">
+        UPDATE question set comment_count = comment_count + 1 WHERE id = #{id}
+    </update>
+
     <!-- 删除文章 -->
     <delete id="deleteId">
         DELETE from question where id = #{id};
@@ -55,7 +60,22 @@
 
     <!-- 分页查询 -->
     <select id="selectAll" resultMap="questionResultMap">
-        SELECT * FROM question
+        select * from question order by id desc limit #{offset},#{size} ;
+    </select>
+
+    <!-- 根据id进行分页查询 -->
+    <select id="selectAllByid" resultMap="questionResultMap">
+        select * from question where creator=#{userId} order by id desc limit #{offset},#{size} ;
+    </select>
+
+    <!-- 查询总条数 -->
+    <select id="count" resultType="Integer">
+        select count(1) from question;
+    </select>
+
+    <!-- 根据用户id查询 -->
+    <select id="countById"  resultMap="questionResultMap">
+        select * from question where creator=#{userId};
     </select>
 
     <select id="getById"  resultMap="questionResultMap">

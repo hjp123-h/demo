@@ -40,4 +40,7 @@ public interface QuesstionMapper {
 
     //减少点赞数
     void likesDelete(Long articleId);
+
+    //增加回复数
+    void commentAdd(Long id);
 }

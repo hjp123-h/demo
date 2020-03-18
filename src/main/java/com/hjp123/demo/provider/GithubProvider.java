@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Post请求类（未理解）
+ * Post请求类
  */
 
 @Component

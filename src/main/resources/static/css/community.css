@@ -51,3 +51,7 @@ body{
     justify-content:center;
     align-items:center;
 }
+.datecss{
+    margin-top: 15px;
+    color: #999999;
+}

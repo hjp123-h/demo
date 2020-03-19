@@ -19,7 +19,7 @@ public interface CommentMapper {
 
     List<Comment> selectByParentId(Long id, Integer type);
 
-    void incCommentCount(Long commentId, Integer commentCount);
+    void incCommentCount(Long commentId);
 
     void incLikeCount(Long commentId, Integer likeCount);
 

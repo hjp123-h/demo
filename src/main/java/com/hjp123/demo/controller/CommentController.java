@@ -1,6 +1,7 @@
 package com.hjp123.demo.controller;
 
 import com.hjp123.demo.bean.Comment;
+import com.hjp123.demo.bean.Likes;
 import com.hjp123.demo.bean.User;
 import com.hjp123.demo.dto.CommentDTO;
 import com.hjp123.demo.dto.ResultDTO;
@@ -13,13 +14,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class CommentController {
 
-    @Autowired
-    private CommentMapper commentMapper;
     @Autowired
     private CommentService commentService;
 
@@ -48,5 +48,14 @@ public class CommentController {
         commentService.insert(comment);
 
         return ResultDTO.okOf();
+    }
+
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultDTO<List> comments(@PathVariable Long id){
+
+        List<CommentDTO> commentDTOS = commentService.listByQuestionId(id, 2);
+
+        return ResultDTO.okOf(commentDTOS);
     }
 }

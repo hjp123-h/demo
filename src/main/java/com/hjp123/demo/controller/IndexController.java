@@ -37,7 +37,7 @@ public class IndexController {
     @RequestMapping("/")
     public String hello(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "7") Integer size){
+                        @RequestParam(name = "size", defaultValue = "10") Integer size){
 
         //传递登陆Github参数
         model.addAttribute("uri",uri);

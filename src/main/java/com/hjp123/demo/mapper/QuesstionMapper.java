@@ -43,4 +43,6 @@ public interface QuesstionMapper {
 
     //增加回复数
     void commentAdd(Long id);
+
+    List<Question> selectRelated (Long id, String tag);
 }

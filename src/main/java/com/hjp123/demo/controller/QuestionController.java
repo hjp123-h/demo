@@ -1,6 +1,7 @@
 package com.hjp123.demo.controller;
 
 import com.hjp123.demo.bean.Likes;
+import com.hjp123.demo.bean.Question;
 import com.hjp123.demo.bean.User;
 import com.hjp123.demo.dto.CommentDTO;
 import com.hjp123.demo.dto.QuestionDTO;
@@ -57,10 +58,11 @@ public class QuestionController {
         }
 
         List<CommentDTO> commentDTOS = commentService.listByQuestionId(id,1);
-
+        List<Question> relatedQuestionDTO = questionService.selectRelated(questionDTO);
         //将问题详情传入model
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",commentDTOS);
+        model.addAttribute("relatedQuestionDTO",relatedQuestionDTO);
         return "question";
     }
 }

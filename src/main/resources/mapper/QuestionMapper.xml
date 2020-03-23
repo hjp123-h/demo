@@ -81,4 +81,9 @@
     <select id="getById"  resultMap="questionResultMap">
         select * from question where id=#{userId};
     </select>
+
+    <!-- 标签推荐 -->
+    <select id="selectRelated" resultMap="questionResultMap">
+        select  * from question where id!=#{id} and tag regexp #{tag} LIMIT 5;
+    </select>
 </mapper>

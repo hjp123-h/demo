@@ -4,6 +4,7 @@ import com.hjp123.demo.bean.Question;
 import com.hjp123.demo.bean.User;
 import com.hjp123.demo.mapper.QuesstionMapper;
 import com.hjp123.demo.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,12 +55,15 @@ public class PublishController {
                 Question question = new Question();
                 question.setTitle(title);
                 question.setDescription(description);
-                question.setTag(tag);
+                //将标签进行格式化
+                String formatTag = questionService.formatTag(tag);
+                question.setTag(formatTag);
                 //获取session
                 HttpSession session = httpServletRequest.getSession();
                 Object object = session.getAttribute("user");
                 //判断session是否为user类型 并且不等于空
                 if (object instanceof User && object != null) {
+                    //获取User
                     User user = (User) object;
                     //取出user中数据 放入Qusetion中
                     question.setCreator(user.getId());

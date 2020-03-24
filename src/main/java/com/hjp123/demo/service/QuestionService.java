@@ -142,7 +142,7 @@ public class QuestionService {
         return questions;
     }
 
-    //标签操作类
+    //标签格式化类
     public String formatTag (String tag){
 
         //设置标签暂存集合

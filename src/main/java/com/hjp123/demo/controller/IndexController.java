@@ -5,6 +5,7 @@ import com.hjp123.demo.bean.User;
 import com.hjp123.demo.dto.PaginationDTO;
 import com.hjp123.demo.dto.QuestionDTO;
 import com.hjp123.demo.mapper.LikeMapper;
+import com.hjp123.demo.mapper.NoticeMapper;
 import com.hjp123.demo.mapper.QuesstionMapper;
 import com.hjp123.demo.mapper.UserMapper;
 import com.hjp123.demo.service.QuestionService;
@@ -33,15 +34,24 @@ public class IndexController {
 
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private NoticeMapper noticeMapper;
 
     @RequestMapping("/")
     public String hello(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "10") Integer size){
+                        @RequestParam(name = "size", defaultValue = "10") Integer size,
+                        HttpServletRequest httpServletRequest){
 
         //传递登陆Github参数
         model.addAttribute("uri",uri);
         model.addAttribute("clientid",Clientid);
+
+        User user = (User)httpServletRequest.getSession().getAttribute("user");
+        if (user != null){
+            Integer unread = noticeMapper.getUnread(user.getId());
+            model.addAttribute("unread",unread);
+        }
 
         //获取全部文章
         PaginationDTO pagination = questionService.selectAll(page,size);

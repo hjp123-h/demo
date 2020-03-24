@@ -2,6 +2,7 @@ package com.hjp123.demo.controller;
 
 import com.hjp123.demo.bean.Question;
 import com.hjp123.demo.bean.User;
+import com.hjp123.demo.mapper.NoticeMapper;
 import com.hjp123.demo.mapper.QuesstionMapper;
 import com.hjp123.demo.service.QuestionService;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +26,9 @@ public class PublishController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private NoticeMapper noticeMapper;
 
     /**
      * 进入注册页面类
@@ -69,6 +73,10 @@ public class PublishController {
                     question.setCreator(user.getId());
                     question.setId(id);
 
+                    //获取未读消息
+                    Integer unread = noticeMapper.getUnread(user.getId());
+                    model.addAttribute("unread",unread);
+
                     //将正文内容插传入service
                     questionService.increaseQuestion(question);
                     //调用RedirectAttributes类放入成功信息 用于重定向传递数据 Model无法重定向传递数据
@@ -98,6 +106,9 @@ public class PublishController {
         //获取session中用户
         User user = (User) httpServletRequest.getSession().getAttribute("user");
         if (user != null ){
+            //获取未读消息
+            Integer unread = noticeMapper.getUnread(user.getId());
+            model.addAttribute("unread",unread);
             //根据传入id查询出文章信息
             Question question_user = quesstionMapper.getById(id);
             //获取文章作者id

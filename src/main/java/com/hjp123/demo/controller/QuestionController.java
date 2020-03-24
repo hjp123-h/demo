@@ -6,6 +6,7 @@ import com.hjp123.demo.bean.User;
 import com.hjp123.demo.dto.CommentDTO;
 import com.hjp123.demo.dto.QuestionDTO;
 import com.hjp123.demo.mapper.LikeMapper;
+import com.hjp123.demo.mapper.NoticeMapper;
 import com.hjp123.demo.mapper.QuesstionMapper;
 import com.hjp123.demo.service.CommentService;
 import com.hjp123.demo.service.QuestionService;
@@ -31,6 +32,8 @@ public class QuestionController {
     private LikeMapper likeMapper;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private NoticeMapper noticeMapper;
 
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Long id,
@@ -48,8 +51,12 @@ public class QuestionController {
         if (questionDTOId != null && user != null){
             Long userId = user.getId();
             //查询用户是否点赞过
+            //获取未读消息
+            Integer unread = noticeMapper.getUnread(user.getId());
+            model.addAttribute("unread",unread);
             Likes likeMapperById = likeMapper.getById(questionDTOId,userId);
             //查询出来不等于0的话 给likes赋值have，否则NoLike
+
             if (likeMapperById != null){
                 questionDTO.setLikes("Have");
             }else {

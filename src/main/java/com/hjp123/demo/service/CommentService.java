@@ -29,6 +29,8 @@ public class CommentService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NoticeService noticeService;
 
     @Transactional
     public void insert(Comment comment) {
@@ -44,6 +46,13 @@ public class CommentService {
             if (dbComment == null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOTFOUND);
             }
+
+            //创建通知
+            Long parentId = dbComment.getParentId();
+            int id = Math.toIntExact(parentId);
+            Question byId = questionMapper.getById(parentId);
+            noticeService.addArticleId(comment.getCommentator(),byId.getCreator(),id,
+                    3,1,comment.getContent());
             commentMapper.insert(comment);
             commentMapper.incCommentCount(comment.getParentId());
         }else {
@@ -51,6 +60,12 @@ public class CommentService {
             if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOTFOUND);
             }
+            //创建通知
+            Long parentId = comment.getParentId();
+            Integer parentID = Integer.valueOf(String.valueOf(parentId));
+            Question byId = questionMapper.getById(parentId);
+            noticeService.addArticleId(comment.getCommentator(),byId.getCreator(),parentID,
+                    2,1,comment.getContent());
             commentMapper.insert(comment);
 
             questionMapper.commentAdd(comment.getParentId());

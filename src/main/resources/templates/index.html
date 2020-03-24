@@ -31,20 +31,22 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li  th:if="${session.user !=null}">
-                    <a href="/publish" class=" glyphicon glyphicon-edit">写博客</a>
+                    <a href="/publish"  style="font-size: 16px;margin-top: 1px">提问</a>
+                </li>
+                <li th:if="${session.user !=null}">
+                    <a href="/profile/reolies" style="font-size: 16px;margin-top: 1px">通知 <span class="badge" style="background-color: #e36868;margin-top: -1px" th:class="${unread == 0}?'':'badge'" th:text="${unread == 0}?'':${unread}"></span></a>
                 </li>
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false" >
-                        <span th:text="${session.user.getName()}"></span>
+                        <span th:text="${session.user.getName()}" style="font-size: 18px"></span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/profile/questions">我的问题</a></li>
-                        <li><a href="#">个人资料</a></li>
+                        <li><a href="/profile/questions">个人中心</a></li>
                         <li><a href="/destroyCookie">退出登陆</a></li>
                         <li class="divider"></li>
-                        <li><a th:text="'欢迎回来：'+${session.user.name}">欢迎回来:</a></li>
+                        <li><a th:text="'欢迎回来：'+${session.user.name}"></a></li>
                     </ul>
                 </li>
                 <li th:if="${session.user == null}">

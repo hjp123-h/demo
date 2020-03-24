@@ -26,6 +26,9 @@ public interface QuesstionMapper {
     //查询指定文章
     Question getById(Long userId);
 
+    //查询热门文章
+    List<Question> seleteHot();
+
     //更新文章
     void update(Question question);
 

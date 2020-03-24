@@ -86,4 +86,8 @@
     <select id="selectRelated" resultMap="questionResultMap">
         select  * from question where id!=#{id} and tag regexp #{tag} order by id desc LIMIT 10;
     </select>
+
+    <select id="seleteHot" resultType="com.hjp123.demo.bean.Question">
+        select  * from question order by comment_count desc,like_count desc,view_count desc,gmt_modified asc LIMIT 10;
+    </select>
 </mapper>

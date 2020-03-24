@@ -76,7 +76,7 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 a-right">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span>&nbsp;&nbsp;发现</h2>
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"  style="top: 2px"></span>&nbsp;&nbsp;发现</h2>
             <hr>
             <div class="media" th:each="question : ${pagination.questionDTOS}">
                 <div class="media-left">
@@ -133,7 +133,20 @@
             </nav>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <h3>热门话题</h3>
+            <h3>
+                <span style="margin-right: 15px">
+                    <span class=" glyphicon glyphicon-fire" aria-hidden="true" style="top: 3px"></span>&nbsp;
+                    热门话题
+                 </span>
+            </h3>
+
+
+            <hr>
+            <ul  >
+                <li th:each="question : ${questions}" style="padding: 8px;list-style: none;margin-left: -45px">
+                    <a th:href="@{'/question/'+${question.id}}" th:text="${question.getTitle()}"></a>
+                </li>
+            </ul>
             <hr>
             <img src="images/1.PNG" width="200">
             <img src="images/2.PNG" width="200">

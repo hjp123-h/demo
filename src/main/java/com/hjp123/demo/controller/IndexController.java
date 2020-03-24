@@ -35,6 +35,8 @@ public class IndexController {
     @Autowired
     private QuestionService questionService;
     @Autowired
+    private QuesstionMapper quesstionMapper;
+    @Autowired
     private NoticeMapper noticeMapper;
 
     @RequestMapping("/")
@@ -56,6 +58,9 @@ public class IndexController {
         //获取全部文章
         PaginationDTO pagination = questionService.selectAll(page,size);
         model.addAttribute("pagination",pagination);
+        //获取热门文章
+        List<Question> questions = quesstionMapper.seleteHot();
+        model.addAttribute("questions",questions);
         return "index";
     }
 

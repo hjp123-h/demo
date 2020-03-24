@@ -51,7 +51,7 @@ public class CommentService {
             Long parentId = dbComment.getParentId();
             int id = Math.toIntExact(parentId);
             Question byId = questionMapper.getById(parentId);
-            noticeService.addArticleId(comment.getCommentator(),byId.getCreator(),id,
+            noticeService.addArticleId(comment.getCommentator(),dbComment.getCommentator(),id,
                     3,1,comment.getContent());
             commentMapper.insert(comment);
             commentMapper.incCommentCount(comment.getParentId());

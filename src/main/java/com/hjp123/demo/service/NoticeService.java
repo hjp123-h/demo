@@ -38,6 +38,7 @@ public class NoticeService {
             notice.setStatus(status);
             notice.setContent(content);
             notice.setTime(System.currentTimeMillis());
+            System.out.println(notice);
             noticeMapper.addArticleId(notice);
         }
     }

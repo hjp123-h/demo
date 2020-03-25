@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjp123.demo.mapper.LikeMapper">
+
+    <!-- 添加点赞数据 -->
+    <insert id="addArticleId">
+        INSERT INTO likes(articleId,userId) VALUE (#{articleId},#{userId});
+    </insert>
+
+    <!-- 删除点赞数据 -->
+    <delete id="deleteArticleId">
+        DELETE from likes where articleId = #{articleId} AND userId = #{userId};
+    </delete>
+
+    <!-- 查询点赞数据是否存在 -->
+    <select id="getById" resultType="com.hjp123.demo.bean.Likes">
+         select * from likes where articleId = #{articleId} AND userId = #{userId};
+    </select>
+</mapper>

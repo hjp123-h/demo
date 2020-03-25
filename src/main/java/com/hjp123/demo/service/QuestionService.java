@@ -30,6 +30,10 @@ public class QuestionService {
     private UserMapper userMapper;
     @Autowired
     private QuesstionMapper quesstionMapper;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private LikeMapper likeMapper;
 
     public PaginationDTO selectAll(Integer page, Integer size) {
 

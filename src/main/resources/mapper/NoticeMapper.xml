@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjp123.demo.mapper.NoticeMapper">
+
+    <insert id="addArticleId">
+        INSERT INTO notice(authorid,replyid,articleid,type,status,content,time) VALUE (#{authorid},#{replyid},#{articleid},#{type},#{status},#{content},#{time})
+    </insert>
+
+    <!-- 根据id查询用户所有通知 -->
+    <select id="getById" resultType="com.hjp123.demo.bean.Notice">
+        select * from notice where replyid = #{replyid} order by status asc,time desc LIMIT 30;
+    </select>
+
+    <!-- 获取未读消息数 -->
+    <select id="getUnread" resultType="Integer">
+        select count(1) from notice where replyid = #{replyid} AND status = 1;
+    </select>
+
+    <!-- 更新已读消息 -->
+    <update id="updateHave">
+        UPDATE notice set status = 2 WHERE replyid = #{replyid} AND articleid=#{articleid};
+    </update>
+
+    <!--更新全部消息-->
+    <update id="updateAll">
+         UPDATE notice set status = 2 WHERE replyid = #{replyid};
+    </update>
+</mapper>

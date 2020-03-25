@@ -3,6 +3,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+src/main/resources/application-*.properties
+
+
+###删除 git rm -r --cached src/main/resources/application-*.properties ###
 ### STS ###
 
 .apt_generated

@@ -34,7 +34,7 @@
                     <h4 class="media-heading">
                         <a th:href="@{'/question/'+${question.id}}" th:text="${#strings.abbreviate(question.title,22)}"></a>
                     </h4>
-                    <span th:text="${#strings.abbreviate(question.description,42)}"></span><br>
+                    <span th:text="${#strings.abbreviate(question.description,50)}"></span><br>
                     <span class="text-desc">
                         <span th:text="${question.user.name}"> </span> ●
                         <span th:text="${question.getCommentCount()}"> </span>个回复 ●

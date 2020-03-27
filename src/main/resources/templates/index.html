@@ -86,9 +86,9 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading" >
-                        <a th:href="@{'/question/'+${question.id}}" th:text="${#strings.abbreviate(question.title,22)}"></a>
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${#strings.abbreviate(question.title,30)}"></a>
                     </h4>
-                    <span th:text="${#strings.abbreviate(question.description,42)}"></span><br>
+                    <span th:text="${#strings.abbreviate(question.description,60)}"></span><br>
                     <span class="text-desc">
                         <span th:text="${question.user.name}"> </span> ●
                         <span th:text="${question.getCommentCount()}"> </span>个回复 ●
@@ -160,7 +160,7 @@
 <!-- 页脚备案 -->
 <div class="div_foot">
     <hr>
-    <p class="text-nowrap"> 豫ICP备20005119号</p>
+    <a th:href="'http://beian.miit.gov.cn'" style="color: #999999" class="text-nowrap"> 豫ICP备20005119号</a>
 </div>
 </body>
 <script src="/js/login.js"></script>

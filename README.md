@@ -2,6 +2,8 @@
 
 
 ## 更新日志
+v0.8.1：调整部分细节。
+
 v0.8.0：增加了图片上传功能，修复部分bug。
 
 v0.7.3：增加了富文本编辑。
@@ -51,7 +53,6 @@ v0.1：增加了Github登陆。
 [Spring Dev Tool](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#using-boot-devtools)  
 [Spring MVC](https://docs.spring.io/spring/docs/5.0.3.RELEASE/spring-framework-reference/web.html#mvc-handlermapping-interceptor)  
 [Markdown 插件](http://editor.md.ipandao.com/)   
-[UFfile SDK](https://github.com/ucloud/ufile-sdk-java)  
 
 ## 工具
 [Git](https://git-scm.com/download)   

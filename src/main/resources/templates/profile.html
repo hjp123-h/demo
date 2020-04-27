@@ -22,7 +22,12 @@
     <div class="row">
         <!-- 左边 -->
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 a-right">
-            <h2><span th:text="${sectionName}"></span></h2>
+            <h2>
+                <span >
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"  style="top: 4px" ></span>
+                    <span th:text="${sectionName}" style="margin-left: 3px"></span>
+                </span>
+            </h2>
             <hr>
             <div class="media" th:each="question : ${pagination.questionDTOS}">
                 <div class="media-left">
@@ -45,6 +50,38 @@
                 </div>
                 <hr>
             </div>
+
+            <!-- 分页 -->
+            <nav aria-label="Page navigation" style="text-align: center">
+
+                <ul class="pagination pagination-lg">
+
+                    <li th:if="${pagination.showFirstPage}">
+                        <a href="/profile/questions?page=1" aria-label="Previous">
+                            <span aria-hidden="true">>&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showPrevious}">
+                        <a th:href="@{/profile/questions(page=${pagination.page - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pagination.pages}" th:class="${pagination.page==page}?'active':''">
+                        <a th:href="@{/profile/questions(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{/profile/questions(page=${pagination.page + 1})}" aria-label="next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{/profile/questions(page=${pagination.totalPage})}" aria-label="next">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
         </div>
 
         <!-- 右边 -->

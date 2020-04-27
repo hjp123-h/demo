@@ -9,9 +9,19 @@
         INSERT INTO notice(authorid,replyid,articleid,type,status,content,time) VALUE (#{authorid},#{replyid},#{articleid},#{type},#{status},#{content},#{time})
     </insert>
 
+    <!-- 根据id查询用户分页通知 -->
+    <select id="selectAllByid" resultType="com.hjp123.demo.bean.Notice">
+        SELECT * FROM notice WHERE replyid = #{userId} ORDER BY status asc,time DESC LIMIT #{offset},#{size};
+    </select>
+
     <!-- 根据id查询用户所有通知 -->
     <select id="getById" resultType="com.hjp123.demo.bean.Notice">
-        select * from notice where replyid = #{replyid} order by status asc,time desc LIMIT 30;
+        SELECT * FROM notice WHERE replyid = #{replyid} ORDER BY status asc,time DESC LIMIT 30;
+    </select>
+
+    <!-- 查询指定用户通知数 -->
+    <select id="countById" resultType="Integer">
+        select count(1) from notice where replyid=#{replyid};
     </select>
 
     <!-- 获取未读消息数 -->

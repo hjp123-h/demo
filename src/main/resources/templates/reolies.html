@@ -23,13 +23,18 @@
         <!-- 左边 -->
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 a-right">
 
-            <h2><span th:text="${sectionName}"></span></h2>
+            <h2>
+                <span >
+                    <span class="glyphicon glyphicon-bell" aria-hidden="true"  style="top: 4px" ></span>
+                    <span th:text="${sectionName}" style="margin-left: 3px"></span>
+                </span>
+            </h2>
             <h4>
                 <a th:if="${unread != 0}" th:href="@{'/unread/unreadAll'}" class="label label-danger pull-right" style="margin-top: -15px;">一键全部已读</a>
             </h4>
             <hr>
-            <div class="media" th:if="${noticeDTOS != null}">
-                <div th:each="notice:${noticeDTOS}">
+            <div class="media" th:if="${pagination != null}">
+                <div th:each="notice:${pagination.getNoticeDTO()}">
                     <div class="media-left">
                         <a href="#">
                             <img class="media-object img-circle" src="/images/IMG_0448.PNG">
@@ -54,6 +59,38 @@
                     <hr>
                 </div>
             </div>
+
+            <!-- 分页 -->
+            <nav aria-label="Page navigation" style="text-align: center">
+
+                <ul class="pagination pagination-lg">
+
+                    <li th:if="${pagination.showFirstPage}">
+                        <a href="/profile/reolies?page=1" aria-label="Previous">
+                            <span aria-hidden="true">>&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showPrevious}">
+                        <a th:href="@{/profile/reolies(page=${pagination.page - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pagination.pages}" th:class="${pagination.page==page}?'active':''">
+                        <a th:href="@{/profile/reolies(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{/profile/reolies(page=${pagination.page + 1})}" aria-label="next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{/profile/reolies(page=${pagination.totalPage})}" aria-label="next">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
         </div>
 
         <!-- 右边 -->

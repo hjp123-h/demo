@@ -65,7 +65,8 @@
 
     <!-- 根据id进行分页查询 -->
     <select id="selectAllByid" resultMap="questionResultMap">
-        select * from question where creator=#{userId} order by id desc limit #{offset},#{size} ;
+        select * from question where creator=#{userId} order by id desc limit #{offset},#{size};
+
     </select>
 
     <!-- 查询总条数 -->
@@ -73,10 +74,15 @@
         select count(1) from question;
     </select>
 
-    <!-- 根据用户id查询 -->
-    <select id="countById"  resultMap="questionResultMap">
-        select * from question where creator=#{userId};
+    <!-- 查询指定用户条数 -->
+    <select id="countById" resultType="Integer">
+        select count(1) from question where creator=#{userId};
     </select>
+
+    <!-- 根据用户id查询 -->
+    <!--<select id="countById"  resultMap="questionResultMap">
+        select * from question where creator=#{userId};
+    </select>-->
 
     <select id="getById"  resultMap="questionResultMap">
         select * from question where id=#{userId};

@@ -32,9 +32,9 @@ public class QuestionService {
     private QuesstionMapper quesstionMapper;
     @Autowired
     private UserService userService;
-    @Autowired
-    private LikeMapper likeMapper;
 
+
+    //主页分页
     public PaginationDTO selectAll(Integer page, Integer size) {
 
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -72,9 +72,10 @@ public class QuestionService {
         return paginationDTO;
     }
 
+    //我的问题分页
     public PaginationDTO selectAll(Long userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = quesstionMapper.count();
+        Integer totalCount = quesstionMapper.countById(userId);
         paginationDTO.setPagination(totalCount, page, size);
 
         if (page < 1) {
@@ -83,11 +84,10 @@ public class QuestionService {
         if (page > paginationDTO.getTotalPage()) {
             page = paginationDTO.getTotalPage();
         }
-        //size*(page-1)
+
         Integer offset = size * (page - 1);
         List<Question> questions = quesstionMapper.selectAllByid(userId,offset, size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
-
 
         questions.forEach(i -> {
             User user = userService.findUserById(i.getCreator());

@@ -10,14 +10,15 @@ import java.util.List;
  */
 @Data
 public class PaginationDTO {
+    private List<NoticeDTO> noticeDTO;
     private List<QuestionDTO> questionDTOS;
     private boolean showPrevious;//前一页按钮
     private boolean showFirstPage;//首页按钮
     private boolean showNext;//下一页按钮
     private boolean showEndPage;//尾页按钮
-    private Integer page;
+    private Integer page;//第几条
     private List<Integer> pages = new ArrayList<>();
-    private Integer totalPage;
+    private Integer totalPage;//总数
 
     public void setPagination(Integer totalCount, Integer page, Integer size) {
 

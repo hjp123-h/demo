@@ -68,12 +68,17 @@ public class NoticeService {
         }
 
         //分页公式 行数-1
-        Integer offset = size * (page - 1);
+        Integer offset = 0;
+        if(page > 0){
+            offset = size * (page - 1);
+        }
         //获取分页后的集合
         List<Notice> notices = noticeMapper.selectAllByid(userId,offset, size);
         //调用方法放入通知DTO
-        List<NoticeDTO> noticeDTOList = getBy(notices);
-
+        List<NoticeDTO> noticeDTOList = null;
+        if (notices.size() > 0) {
+            noticeDTOList = getBy(notices);
+        }
         //将通知DTO放入分页DTO
         paginationDTO.setNoticeDTO(noticeDTOList);
         return paginationDTO;
@@ -101,6 +106,8 @@ public class NoticeService {
                     User user = userMapper.selectById(n.getAuthorid());
                     //获取通知者姓名
                     noticeDTO.setAuthor(user.getName());
+                    //获取通知者信息
+                    noticeDTO.setAuthorUser(user);
                     //放入通知DTO集合
                     noticeDTOS.add(noticeDTO);
                 }else {
@@ -116,6 +123,8 @@ public class NoticeService {
                     User user = userMapper.selectById(n.getAuthorid());
                     //获取通知者姓名
                     noticeDTO.setAuthor(user.getName());
+                    //获取通知者信息
+                    noticeDTO.setAuthorUser(user);
                     //放入通知DTO集合
                     noticeDTOS.add(noticeDTO);
                 }

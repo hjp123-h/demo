@@ -29,6 +29,7 @@
                 </span>
             </h2>
             <hr>
+            <h4>您暂时没有新问题哦</h4>
             <div class="media" th:each="question : ${pagination.questionDTOS}">
                 <div class="media-left">
                     <a href="#">
@@ -52,7 +53,7 @@
             </div>
 
             <!-- 分页 -->
-            <nav aria-label="Page navigation" style="text-align: center">
+            <nav aria-label="Page navigation" style="text-align: center" th:if="${pagination.getQuestionDTOS() != null}">
 
                 <ul class="pagination pagination-lg">
 

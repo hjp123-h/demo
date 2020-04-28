@@ -32,7 +32,7 @@ public class FileController {
 
         //图片上传接口
         try {
-            URL  url = aliOssProvider.upload(file.getInputStream(), file.getOriginalFilename());
+            URL  url = aliOssProvider.upload(file.getInputStream(), "question/" + file.getOriginalFilename());
 
             FileDTO fileDTO = new FileDTO();
             fileDTO.setSuccess(1);
@@ -62,7 +62,7 @@ public class FileController {
         }
         //图片上传接口
         try {
-            URL  url = aliOssProvider.upload(file.getInputStream(), file.getOriginalFilename());
+            URL  url = aliOssProvider.upload(file.getInputStream(), "avatar/" + file.getOriginalFilename());
             userMapper.updateAvatat(user.getId(),url.toString());
             FileDTO fileDTO = new FileDTO();
             fileDTO.setSuccess(1);

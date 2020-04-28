@@ -33,11 +33,12 @@
                 <a th:if="${unread != 0}" th:href="@{'/unread/unreadAll'}" class="label label-danger pull-right" style="margin-top: -15px;">一键全部已读</a>
             </h4>
             <hr>
+            <h4>您暂时没有新通知哦</h4>
             <div class="media" th:if="${pagination != null}">
                 <div th:each="notice:${pagination.getNoticeDTO()}">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-circle" src="/images/IMG_0448.PNG">
+                            <img class="media-object img-rounded" th:src="${notice.getAuthorUser().getAvatar()}">
                         </a>
                     </div>
                     <div class="media-body">
@@ -61,7 +62,7 @@
             </div>
 
             <!-- 分页 -->
-            <nav aria-label="Page navigation" style="text-align: center">
+            <nav aria-label="Page navigation" style="text-align: center" th:if="${pagination.getNoticeDTO() != null}">
 
                 <ul class="pagination pagination-lg">
 

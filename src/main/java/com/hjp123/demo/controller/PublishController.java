@@ -31,7 +31,7 @@ public class PublishController {
     private NoticeMapper noticeMapper;
 
     /**
-     * 进入注册页面类
+     * 进入文章页面类
      */
     @GetMapping("/publish")
     public String PublishController() {
@@ -39,7 +39,7 @@ public class PublishController {
     }
 
     /**
-     *注册页面传递数据类
+     *文章页面传递数据类
      */
 
     @PostMapping("/publish")

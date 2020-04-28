@@ -10,18 +10,20 @@ import java.util.List;
  */
 @Data
 public class PaginationDTO {
-    private List<NoticeDTO> noticeDTO;
-    private List<QuestionDTO> questionDTOS;
+    private List<NoticeDTO> noticeDTO;//通知DTO
+    private List<QuestionDTO> questionDTOS;//文章DTO
     private boolean showPrevious;//前一页按钮
     private boolean showFirstPage;//首页按钮
     private boolean showNext;//下一页按钮
     private boolean showEndPage;//尾页按钮
-    private Integer page;//第几条
-    private List<Integer> pages = new ArrayList<>();
-    private Integer totalPage;//总数
+    private Integer page;//条数
+    private List<Integer> pages = new ArrayList<>();//条数数组
+    private Integer totalPage;//总分页数
+    private Integer totalPages;//总条数
 
+    //分页工具类
     public void setPagination(Integer totalCount, Integer page, Integer size) {
-
+        totalPages = totalCount;
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
@@ -72,5 +74,20 @@ public class PaginationDTO {
             showEndPage = true;
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "PaginationDTO{" +
+                "noticeDTO=" + noticeDTO +
+                ", questionDTOS=" + questionDTOS +
+                ", showPrevious=" + showPrevious +
+                ", showFirstPage=" + showFirstPage +
+                ", showNext=" + showNext +
+                ", showEndPage=" + showEndPage +
+                ", page=" + page +
+                ", pages=" + pages +
+                ", totalPage=" + totalPage +
+                '}';
     }
 }

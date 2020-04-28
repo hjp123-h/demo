@@ -48,51 +48,21 @@ public class NoticeService {
         }
     }
 
-    //获取指定用户通知
-    public List<NoticeDTO> getById(Long replyid){
-
-        List<Notice> notices = noticeMapper.getById(replyid);
-        if (notices != null){
-            List<NoticeDTO> noticeDTOS = new ArrayList<>();
-            for (Notice n :notices) {
-                if (n.getType() != 3){
-                    NoticeDTO noticeDTO = new NoticeDTO();
-                    BeanUtils.copyProperties(n,noticeDTO);
-                    Question byId = quesstionMapper.getById(Long.valueOf(n.getArticleid()));
-                    noticeDTO.setArticle(byId.getTitle());
-                    User user = userMapper.selectById(n.getAuthorid());
-                    noticeDTO.setAuthor(user.getName());
-                    noticeDTOS.add(noticeDTO);
-                }else {
-                    NoticeDTO noticeDTO = new NoticeDTO();
-                    BeanUtils.copyProperties(n,noticeDTO);
-                    Comment comment = commentMapper.selectById(Long.valueOf(n.getArticleid()));
-                    noticeDTO.setArticle(comment.getContent());
-                    User user = userMapper.selectById(n.getAuthorid());
-                    noticeDTO.setAuthor(user.getName());
-                    noticeDTOS.add(noticeDTO);
-                }
-
-            }
-            return noticeDTOS;
-        }
-        return null;
-    }
-
     //我的通知分页
     public PaginationDTO selectAll(Long userId, Integer page, Integer size) {
         //创建分页DTO
         PaginationDTO paginationDTO = new PaginationDTO();
         //获取用户总条数
         Integer totalCount = noticeMapper.countById(userId);
-        //调用分页工具类
+
+        //调用分页工具类！！！！！！！！！！！！！！
         paginationDTO.setPagination(totalCount, page, size);
 
-        //条数不能小于1
+        //页数不能小于1
         if (page < 1) {
             page = 1;
         }
-        //条数不能大于总页数
+        //页数不能大于总页数
         if (page > paginationDTO.getTotalPage()) {
             page = paginationDTO.getTotalPage();
         }
@@ -112,24 +82,41 @@ public class NoticeService {
     //获取指定用户通知
     public List<NoticeDTO> getBy(List<Notice> notices){
 
+        //参数不是空的情况下
         if (notices != null){
             List<NoticeDTO> noticeDTOS = new ArrayList<>();
+            //遍历这个参数
             for (Notice n :notices) {
+                //判断type不是点赞情况下
                 if (n.getType() != 3){
+                    //创建一个新的通知DTO
                     NoticeDTO noticeDTO = new NoticeDTO();
+                    //将数据拷贝过去
                     BeanUtils.copyProperties(n,noticeDTO);
+                    //获取文章信息
                     Question byId = quesstionMapper.getById(Long.valueOf(n.getArticleid()));
+                    //向DTO传入文章标题
                     noticeDTO.setArticle(byId.getTitle());
+                    //获取通知者信息
                     User user = userMapper.selectById(n.getAuthorid());
+                    //获取通知者姓名
                     noticeDTO.setAuthor(user.getName());
+                    //放入通知DTO集合
                     noticeDTOS.add(noticeDTO);
                 }else {
+                    //创建一个新的通知DTO
                     NoticeDTO noticeDTO = new NoticeDTO();
+                    //将数据拷贝过去
                     BeanUtils.copyProperties(n,noticeDTO);
+                    //获取点赞信息
                     Comment comment = commentMapper.selectById(Long.valueOf(n.getArticleid()));
+                    //向DTO传入点赞信息
                     noticeDTO.setArticle(comment.getContent());
+                    //获取通知者信息
                     User user = userMapper.selectById(n.getAuthorid());
+                    //获取通知者姓名
                     noticeDTO.setAuthor(user.getName());
+                    //放入通知DTO集合
                     noticeDTOS.add(noticeDTO);
                 }
 

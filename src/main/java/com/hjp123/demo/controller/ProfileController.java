@@ -50,7 +50,7 @@ public class ProfileController {
                           Model model,
                           HttpServletRequest httpServletRequest,
                           @RequestParam(name = "page", defaultValue = "1") Integer page,
-                          @RequestParam(name = "size", defaultValue = "7") Integer size) {
+                          @RequestParam(name = "size", defaultValue = "10") Integer size) {
 
         User user = (User) httpServletRequest.getSession().getAttribute("user");
 

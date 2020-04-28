@@ -35,10 +35,16 @@ public class QuestionService {
 
 
     //主页分页
-    public PaginationDTO selectAll(Integer page, Integer size) {
+    public PaginationDTO selectAll(Integer page, Integer size,String search) {
 
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = quesstionMapper.count();
+        Integer totalCount = null;
+        //判断是否需要执行搜索的分页查找
+        if(search == null){
+            totalCount = quesstionMapper.count();
+        }else {
+            totalCount = quesstionMapper.countLike(search);
+        }
         paginationDTO.setPagination(totalCount, page, size);
 
         if (page < 1) {
@@ -49,9 +55,15 @@ public class QuestionService {
         }
 
         Integer offset = size * (page-1);
-        //获取所有question对象
-        List<Question> questionList = quesstionMapper.selectAll(offset,size);
+        List<Question> questionList = null;
+        //判断是否需要执行搜索的分页查找
+        if (search == null) {
+            questionList = quesstionMapper.selectAll(offset, size);
 
+        }else {
+            questionList = quesstionMapper.selectsearch(offset, size,search);
+
+        }
         List<QuestionDTO> questionDTOS = new ArrayList<>();
 
         //循环遍历取出

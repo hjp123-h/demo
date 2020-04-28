@@ -94,4 +94,20 @@ public class Question {
     public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", tag='" + tag + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", creator=" + creator +
+                ", viewCount=" + viewCount +
+                ", commentCount=" + commentCount +
+                ", likeCount=" + likeCount +
+                '}';
+    }
 }

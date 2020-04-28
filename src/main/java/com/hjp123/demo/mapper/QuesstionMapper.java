@@ -14,17 +14,20 @@ public interface QuesstionMapper {
     //查询所有数据
     List<Question> selectAll(Integer offset, Integer size);
 
+    //搜索数据分页
+    List<Question> selectsearch(Integer offset, Integer size, String search);
+
     //查询总条数
     Integer count();
+
+    //模糊查询条数
+    Integer countLike(String search);
 
     //查询总条数
     Integer countById(Long userId);
 
     //查询指定用户发表的文章进行分页
     List<Question> selectAllByid(Long userId, Integer offset, Integer size);
-
-    //查询指定用户文章 不进行分页
-    //Question countById(Long userId);
 
     //查询指定文章
     Question getById(Long userId);
@@ -50,5 +53,7 @@ public interface QuesstionMapper {
     //增加回复数
     void commentAdd(Long id);
 
+    //标签推荐
     List<Question> selectRelated (Long id, String tag);
+
 }

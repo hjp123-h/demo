@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -56,7 +58,7 @@ public class IndexController {
         }
 
         //获取全部文章
-        PaginationDTO pagination = questionService.selectAll(page,size);
+        PaginationDTO pagination = questionService.selectAll(page,size,null);
         model.addAttribute("pagination",pagination);
         //获取热门文章
         List<Question> questions = quesstionMapper.seleteHot();
@@ -64,4 +66,26 @@ public class IndexController {
         return "index";
     }
 
+
+    /**
+     * 搜索文章
+     */
+    @GetMapping("/SearchFor")
+    public String SearchFor(String search,
+                            Model model,
+                            @RequestParam(name = "page", defaultValue = "1") Integer page,
+                            @RequestParam(name = "size", defaultValue = "10") Integer size){
+
+        //搜索文章
+        PaginationDTO pagination = questionService.selectAll(page,size,search);
+        model.addAttribute("pagination",pagination);
+        if (!search.equals("") && search != null){
+            model.addAttribute("size",pagination.getTotalPages());
+            model.addAttribute("search",search);
+        }
+        //获取热门文章
+        List<Question> questions = quesstionMapper.seleteHot();
+        model.addAttribute("questions",questions);
+        return "index";
+    }
 }

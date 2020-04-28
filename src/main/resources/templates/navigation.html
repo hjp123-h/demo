@@ -36,10 +36,10 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a th:text="'欢迎回来：'+${session.user.name}" href="#"></a></li>
+                                <li class="divider"></li>
                                 <li><a href="/profile/questions">我的提问</a></li>
                                 <li><a href="/destroyCookie">退出登陆</a></li>
-                                <li class="divider"></li>
-                                <li><a th:text="'欢迎回来：'+${session.user.name}"></a></li>
 
                             </ul>
                         </li>

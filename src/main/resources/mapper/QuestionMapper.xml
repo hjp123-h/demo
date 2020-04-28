@@ -63,6 +63,11 @@
         select * from question order by id desc limit #{offset},#{size} ;
     </select>
 
+    <!-- 搜索数据分页 -->
+    <select id="selectsearch"  resultMap="questionResultMap">
+        select * from question where title Like CONCAT('%',#{search},'%') or description Like CONCAT('%',#{search},'%')  order by id desc limit #{offset},#{size};
+    </select>
+
     <!-- 根据id进行分页查询 -->
     <select id="selectAllByid" resultMap="questionResultMap">
         select * from question where creator=#{userId} order by id desc limit #{offset},#{size};
@@ -79,10 +84,10 @@
         select count(1) from question where creator=#{userId};
     </select>
 
-    <!-- 根据用户id查询 -->
-    <!--<select id="countById"  resultMap="questionResultMap">
-        select * from question where creator=#{userId};
-    </select>-->
+    <!-- 模糊查询条数 -->
+    <select id="countLike" resultType="java.lang.Integer">
+         select count(1) from question where title Like CONCAT('%',#{search},'%') or description Like CONCAT('%',#{search},'%');
+    </select>
 
     <select id="getById"  resultMap="questionResultMap">
         select * from question where id=#{userId};
@@ -96,4 +101,5 @@
     <select id="seleteHot" resultType="com.hjp123.demo.bean.Question">
         select  * from question order by comment_count desc,like_count desc,view_count desc,gmt_modified asc LIMIT 10;
     </select>
+
 </mapper>

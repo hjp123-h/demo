@@ -104,7 +104,7 @@ public class QuestionService {
 
         List<Question> questions = quesstionMapper.selectAllByid(userId,offset, size);
 
-        List<QuestionDTO> questionDTOList = null;
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
         if(questions.size() > 0){
             questions.forEach(i -> {
                 User user = userService.findUserById(i.getCreator());

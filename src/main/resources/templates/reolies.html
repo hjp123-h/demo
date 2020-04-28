@@ -33,7 +33,7 @@
                 <a th:if="${unread != 0}" th:href="@{'/unread/unreadAll'}" class="label label-danger pull-right" style="margin-top: -15px;">一键全部已读</a>
             </h4>
             <hr>
-            <h4>您暂时没有新通知哦</h4>
+            <h4 th:if="${pagination.getNoticeDTO() == null}">您暂时没有新通知哦</h4>
             <div class="media" th:if="${pagination != null}">
                 <div th:each="notice:${pagination.getNoticeDTO()}">
                     <div class="media-left">

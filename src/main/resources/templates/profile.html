@@ -29,11 +29,11 @@
                 </span>
             </h2>
             <hr>
-            <h4>您暂时没有新问题哦</h4>
+            <h4 th:if="${pagination.getQuestionDTOS().size() == 0}">您暂时没有新问题哦</h4>
             <div class="media" th:each="question : ${pagination.questionDTOS}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-circle" src="/images/IMG_0448.PNG">
+                        <img class="media-object img-circle" th:src="${question.user.getAvatar()}">
                     </a>
                 </div>
                 <div class="media-body">
@@ -53,7 +53,7 @@
             </div>
 
             <!-- 分页 -->
-            <nav aria-label="Page navigation" style="text-align: center" th:if="${pagination.getQuestionDTOS() != null}">
+            <nav aria-label="Page navigation" style="text-align: center" th:if="${pagination.getQuestionDTOS().size() > 0}">
 
                 <ul class="pagination pagination-lg">
 

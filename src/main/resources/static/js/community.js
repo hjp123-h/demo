@@ -47,9 +47,9 @@ function collapseComments(e) {
                         var mediaBodyElement = $("<div/>", {
                             "class": "media-body"
                         }).append($("<img/>", {
-                            "class": "pull-left media-object img-rounded",
+                            "class": "pull-left media-object img-circle",
                             "style": "width: 25px;height: 25px ",
-                            "src": '/images/IMG_0448.PNG'
+                            "src": comment.user.avatar
                         })).append($("<h5/>", {
                             "class": "media-heading",
                             "style": "margin-top: 3px",

@@ -8,6 +8,7 @@
     <insert id="increaseGithubUser">
         INSERT INTO user(id,token,name,account,password) VALUE (#{id},#{token},#{name},#{account},#{password})
     </insert>
+
     <insert id="increaseUser">
         INSERT INTO user(name,account,password) VALUE (#{name},#{account},#{password})
         <selectKey resultType="Long" keyProperty="id" order="AFTER">
@@ -16,27 +17,31 @@
     </insert>
 
     <select id="selectByToken" resultType="com.hjp123.demo.bean.User">
-        SELECT id,token,name,account,password FROM user WHERE token=#{token}
+        SELECT * FROM user WHERE token=#{token}
     </select>
 
     <select id="selectById" resultType="com.hjp123.demo.bean.User">
-        SELECT id,token,name,account,password FROM user WHERE id=#{id}
+        SELECT * FROM user WHERE id=#{id}
     </select>
 
     <select id="selectNamePassword" resultType="com.hjp123.demo.bean.User">
-        SELECT id,token,name,account,password FROM user WHERE account=#{account} AND password=#{password}
+        SELECT * FROM user WHERE account=#{account} AND password=#{password}
     </select>
 
     <select id="selectName" resultType="com.hjp123.demo.bean.User">
-         SELECT id,token,name,account,password FROM user WHERE account=#{account}
+         SELECT * FROM user WHERE account=#{account}
     </select>
 
     <update id="updateUser">
         UPDATE user SET id=#{id},token=#{token},name=#{name},account=#{account},password=#{password} WHERE id=#{id}
     </update>
 
+    <update id="updateAvatat">
+         UPDATE user SET avatar=#{avatar} WHERE id=#{id}
+    </update>
+
     <insert id="addUser">
-        INSERT INTO user(token,name,account,password) VALUE (#{token},#{name},#{account},#{password})
+        INSERT INTO user(token,name,account,password,avatar) VALUE (#{token},#{name},#{account},#{password},#{avatar})
     </insert>
 
 </mapper>

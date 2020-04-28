@@ -22,6 +22,8 @@ public class SignUpController {
     @Autowired
     private UserMapper userMapper;
 
+    private String avaterURL = "http://demohjp.oss-cn-beijing.aliyuncs.com/2-9636b13945b9ccf345bc98d0d81074eb.jpg?Expires=1588921063&OSSAccessKeyId=LTAI4FrLFYKADDNuceHGZSw2&Signature=cAI16K67Ples0UOIDREyEiv2vpw%3D";
+
     /**
      *使用Ajax登陆
      * @ResponseBody能将返回字符串转为json格式
@@ -83,6 +85,7 @@ public class SignUpController {
                 //创建user缓存类
                 User GithubUser = new User("用户" + userName, userName, passWord, UUID.randomUUID().toString());
                 //将user插入数据库
+                GithubUser.setAvatar(avaterURL);
                 userMapper.addUser(GithubUser);
                 //将token放入cookie返回
                 Cookie cookie = new Cookie("token", GithubUser.getToken());

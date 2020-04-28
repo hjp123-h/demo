@@ -86,7 +86,7 @@
                     <div class="media" th:each="comment:${comments}">
                         <div class="media-left">
                             <a class="pull-left" style="color: #080808;padding: 3px">
-                                <img src="/images/IMG_0448.PNG" class="media-object"
+                                <img th:src="${comment.user.getAvatar()}" class="media-object img-rounded"
                                      style="width: 50px;height: 50px" >
                             </a>
                         </div>
@@ -134,7 +134,7 @@
                 <div class="media">
                     <div class="media-left">
                         <a class="pull-left" style="color: #080808;padding: 3px">
-                            <img src="/images/IMG_0448.PNG" class="media-object img-rounded"
+                            <img th:src="${session.user.getAvatar()}" class="media-object img-rounded"
                                  style="width: 50px;height: 50px" alt='avatar'>
                         </a>
                     </div>
@@ -162,7 +162,7 @@
                 <div class="media" >
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-circle" src="/images/IMG_0448.PNG">
+                            <img class="media-object img-rounded" th:src="${question.user.getAvatar()}">
                         </a>
                     </div>
                     <div class="media-body">

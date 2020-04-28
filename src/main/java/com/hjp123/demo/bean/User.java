@@ -13,6 +13,7 @@ public class User {
     private String account;
     private String password;
     private String token;
+    private String avatar;
 
     public User() {
     }

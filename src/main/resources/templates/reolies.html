@@ -37,7 +37,7 @@
             <div class="media" th:if="${pagination != null}">
                 <div th:each="notice:${pagination.getNoticeDTO()}">
                     <div class="media-left">
-                        <a href="#">
+                        <a th:href="|/Personal/${notice.getAuthorUser().getId()}|">
                             <img class="media-object img-rounded" th:src="${notice.getAuthorUser().getAvatar()}">
                         </a>
                     </div>
@@ -68,7 +68,7 @@
 
                     <li th:if="${pagination.showFirstPage}">
                         <a href="/profile/reolies?page=1" aria-label="Previous">
-                            <span aria-hidden="true">>&lt;&lt;</span>
+                            <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}">

@@ -1,10 +1,18 @@
 package com.hjp123.demo;
 
+import com.hjp123.demo.bean.Dynamic;
+import com.hjp123.demo.mapper.DynamicMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 class DemoApplicationTests {
+
+    @Autowired
+    private DynamicMapper dynamicMapper;
 
     @Test
     void contextLoads() {

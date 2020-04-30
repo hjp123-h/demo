@@ -12,8 +12,16 @@ body{
     background-color: white;
     margin: 35px;
     border-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
+.main-personal{
+    background-color: white;
+    margin: 35px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
 .btu-pulish{
     float: right;
     margin-bottom: 15px;

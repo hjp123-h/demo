@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjp123.demo.mapper.DynamicMapper">
+
+
+    <select id="selectDynamicById" resultType="com.hjp123.demo.bean.Dynamic">
+        SELECT
+        *
+        FROM
+            (SELECT
+                q.id AS qid,
+                q.title AS qtitle,
+                q.description AS qdescription,
+                q.creator AS qcreator,
+                q.comment_count AS qcomment_count,
+                q.view_count AS qview_count,
+                q.like_count AS qlike_count,
+                0 AS cid,
+                0 AS cparent_id,
+                0 AS ctype,
+                0 AS ccommentator,
+                0 AS ccontent,
+                (q.gmt_create) AS gmtCreate
+            FROM
+                question q
+            WHERE
+                q.creator = #{id}
+            UNION ALL
+            SELECT
+                0 AS qid,
+                0 AS qtitle,
+                0 AS qdescription,
+                0 AS qcreator,
+                0 AS qcomment_count,
+                0 AS qview_count,
+                0 AS qlike_count,
+                c.id AS cid,
+                c.parent_id AS cparent_id,
+                c.type AS ctype,
+                c.commentator AS ccommentator,
+                c.content AS ccontent,
+                (c.gmt_create) AS gmtCreate
+            FROM
+                comment c
+            WHERE
+                c.commentator = #{id}
+                and
+                c.type = 1)
+        AS h
+        order by
+        h.gmtCreate desc
+        LIMIT #{offset},#{size};
+
+
+    </select>
+
+    <!-- 查询总条数 -->
+    <select id="countById" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+            (SELECT
+                (q.gmt_create) AS gmtCreate
+            FROM
+                question q
+            WHERE
+                q.creator = #{id}
+            UNION ALL
+            SELECT
+                (c.gmt_create) AS gmtCreate
+            FROM
+                comment c
+            WHERE
+                c.commentator = #{id}
+                and
+                c.type = 1)
+        AS h;
+    </select>
+</mapper>

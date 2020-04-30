@@ -12,6 +12,7 @@ import java.util.List;
 public class PaginationDTO {
     private List<NoticeDTO> noticeDTO;//通知DTO
     private List<QuestionDTO> questionDTOS;//文章DTO
+    private List<DynamicDTO> dynamicDTOS;//动态DTO
     private boolean showPrevious;//前一页按钮
     private boolean showFirstPage;//首页按钮
     private boolean showNext;//下一页按钮
@@ -76,18 +77,4 @@ public class PaginationDTO {
 
     }
 
-    @Override
-    public String toString() {
-        return "PaginationDTO{" +
-                "noticeDTO=" + noticeDTO +
-                ", questionDTOS=" + questionDTOS +
-                ", showPrevious=" + showPrevious +
-                ", showFirstPage=" + showFirstPage +
-                ", showNext=" + showNext +
-                ", showEndPage=" + showEndPage +
-                ", page=" + page +
-                ", pages=" + pages +
-                ", totalPage=" + totalPage +
-                '}';
-    }
 }

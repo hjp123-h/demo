@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
     <link rel="stylesheet" href="/css/personal.css">
-    <!-- 引入样式 -->
+    <!-- 引入样式  -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.1/lib/theme-chalk/index.css">
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+
 
 </head>
 
@@ -19,29 +20,152 @@
 
 <div th:insert="navigation :: nav"></div>
 
-<div class="container-fluid proflie">
-    <div class="row main" >
+<!-- 个人信息展示 -->
+<div class="container-fluid proflie col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: -20px">
+    <div class="row main-personal" >
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padrl" >
-            <div class="col-lg-13 col-md-13 col-sm-13 col-xs-13" style="background-color: #999999;padding: 75px;border-radius: 6px;"></div>
+            <div class="col-lg-13 col-md-13 col-sm-13 col-xs-13 div-rou" style="background-color: #999999;padding: 75px;"></div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="app">
-                <img th:src="${session.user.getAvatar()}" class="img-rounded homeimg">
+                <img th:src="${pagination.getDynamicDTOS().get(0).getUser().getAvatar()}" class="img-rounded homeimg">
             </div>
             <div class="col-lg- col-md-9 col-sm-9 col-xs-9" th:if="${session != null}">
-                <h1 th:text="${session.user.name}" >姓名</h1>
+                <h1 th:text="${pagination.getDynamicDTOS().get(0).getUser().getName()}" >姓名</h1>
                 <h3 style="font-size: 20px;margin-top: 30px;">资料</h3>
             </div>
-            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" id="elbutton">
-                <el-button id="elbutton" name="elbutton" type="primary" style="margin-top: 65px;margin-left: -87px;" plain>编辑个人资料</el-button>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" id="elbutton" th:if="${session.user != null && session.user.getId() == id}">
+                <a th:href="|/personalmodify/${pagination.getDynamicDTOS().get(0).getUser().id}|">
+                    <el-button style="margin-top: 65px;margin-left: -87px;" plain>编辑个人资料</el-button>
+                </a>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" id="noelbutton" th:if="${session.user != null && session.user.getId() != id}">
+                <el-button type="primary" style="margin-top: 65px;margin-left: -87px;" plain>关注ta</el-button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- 动态显示区域 -->
+<div class="container-fluid proflie col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <!-- 左边 -->
+    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="top: -15px;padding-left: 35px;padding-right: 10px">
+
+        <div class="col-lg-13 col-md-13 col-sm-13 col-xs-13 " style="background-color: white;padding: 75px;">
+            <ul class="nav nav-pills div-left">
+                <li role="presentation" class="active"><a href="#">动态</a></li>
+                <li role="presentation"><a href="#">回答</a></li>
+                <li role="presentation"><a href="#">提问</a></li>
+                <li role="presentation"><a href="#">关注</a></li>
+            </ul>
+
+            <!-- 动态 -->
+            <div style="margin-left: -50px" th:each="dynamic : ${pagination.getDynamicDTOS()}">
+                <div th:if="${dynamic.getCtype() == 0}">
+                    <h5 style="padding-bottom: 5px">发布了新文章</h5>
+                    <div class="media-left">
+                        <a th:href="|/Personal/${dynamic.user.id}|">
+                            <img class="media-object img-rounded" th:src="${dynamic.user.getAvatar()}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" >
+                            <a th:href="@{'/question/'+${dynamic.getQid()}}" th:text="${#strings.abbreviate(dynamic.getQtitle(),30)}"></a>
+                        </h4>
+                        <span th:text="${#strings.abbreviate(dynamic.getQdescription(),60)}"></span><br>
+                        <span class="text-desc">
+                        <span th:text="${dynamic.user.name}"> </span> ●
+                        <span th:text="${dynamic.getQcomment_count()}"> </span>个回复 ●
+                        <span th:text="${dynamic.getQview_count()}"></span>次浏览 ●
+                        <span th:text="${dynamic.getQlike_count()}"></span>次点赞 ●
+                        <span th:text="${#dates.format(dynamic.getGmtCreate(),'yyyy-MM-d HH:mm')}"></span>发布
+                    </span>
+                    </div>
+                </div>
+                <div th:if="${dynamic.getCtype() == 1}">
+                    <h5 style="padding-bottom: 5px" th:text="|${#dates.format(dynamic.getCcomment().getGmtCreate(),'yyyy-MM-d HH:mm')} 回复了|"></h5>
+                    <div class="media-left" >
+                        <a th:href="|/Personal/${dynamic.getCommentuser().getId()}|">
+                            <img class="media-object img-rounded" th:src="${dynamic.getCommentuser().getAvatar()}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" >
+                            <a th:href="@{'/question/'+${dynamic.getCommentquestion().getId()}}" th:text="${#strings.abbreviate(dynamic.getCommentquestion().getTitle(),30)}"></a>
+                        </h4>
+                        <span th:text="|回复了：${#strings.abbreviate(dynamic.getCcomment().getContent(),60)}|"></span><br>
+                        <span class="text-desc">
+                        <span th:text="|作者：${dynamic.getCommentuser().getName()}|"> </span> ●
+                        <span th:text="${dynamic.getCommentquestion().getCommentCount()}"> </span>个回复 ●
+                        <span th:text="${dynamic.getCommentquestion().getViewCount()}"></span>次浏览 ●
+                        <span th:text="${dynamic.getCommentquestion().getLikeCount()}"></span>次点赞 ●
+                        <span th:text="${#dates.format(dynamic.getCommentquestion().getGmtCreate(),'yyyy-MM-d HH:mm')}"></span>发布
+                    </span>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <!-- 分页 -->
+            <h4 class="text-center" style="padding-top: 20px;margin-bottom: -40px;" th:if="${pagination.getTotalPage() == 0}">这位用户动态空空的</h4>
+            <nav aria-label="Page navigation" style="text-align: center" th:if="${pagination.getTotalPage() > 0 && pagination.getDynamicDTOS().size() > 0}">
+
+                <ul class="pagination pagination-lg">
+
+                    <li th:if="${pagination.showFirstPage}">
+                        <a th:href="@{'/Personal/'+${pagination.getDynamicDTOS().get(0).getUser().getId()}+'?page=1'}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showPrevious}">
+                        <a th:href="@{'/Personal/'+${pagination.getDynamicDTOS().get(0).getUser().getId()}+'?page='+${pagination.page - 1}}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pagination.pages}" th:class="${pagination.page==page}?'active':''">
+                        <a th:href="@{'/Personal/'+${pagination.getDynamicDTOS().get(0).getUser().getId()}+'?page='+${page}}" th:text="${page}"></a>
+                    </li>
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{'/Personal/'+${pagination.getDynamicDTOS().get(0).getUser().getId()}+'?page='+${pagination.page + 1}}" aria-label="next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{'/Personal/'+${pagination.getDynamicDTOS().get(0).getUser().getId()}+'?page='+${pagination.totalPage}}" aria-label="next">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- 右边 -->
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="top: -15px;padding-right: 35px;padding-left: 10px">
+        <div >
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color: white;border-right: 1px solid #dbddd3;">
+                <a href="#" style="text-decoration: none">
+                    <h4 class="text-center" style="color: #8590a6;margin-top: 20px">关注了</h4>
+                    <h2 class="text-center" style="color: black">0</h2>
+                </a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color: white">
+                <a href="#"style="text-decoration: none">
+                    <h4 class="text-center" style="color: #8590a6;margin-top: 20px">关注者</h4>
+                    <h2 class="text-center" style="color: black">0</h2>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
 
 <!--遮罩窗体-->
 <div th:insert="modeltion :: nav"></div>
 
-</body>>
+</body>
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/element-ui@2.13.1/lib/index.js"></script>
@@ -49,9 +173,12 @@
     new Vue({
         el: '#elbutton'
     })
-    $("#elbutton").click(function () {
-        window.location.replace("/personalmodify");
+
+    new Vue({
+        el: '#noelbutton'
     })
+
+
 </script>
 <script>
     export default {

@@ -53,9 +53,9 @@
         UPDATE question set comment_count = comment_count + 1 WHERE id = #{id}
     </update>
 
-    <!-- 删除文章 -->
+    <!-- 删除文章，回复，通知表中所有关联的 -->
     <delete id="deleteId">
-        DELETE from question where id = #{id};
+        delete question,comment,notice from question left join comment on question.id=comment.parent_id left join notice on question.id=notice.articleid where question.id=#{id};
     </delete>
 
     <!-- 分页查询 -->

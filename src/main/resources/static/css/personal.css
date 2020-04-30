@@ -7,6 +7,20 @@
     background-color: white;
 }
 
+.div-rou{
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.div-left{
+    margin-top: -60px;
+    margin-left: -60px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dbddd3;
+    margin-right: -60px;
+    margin-bottom: 20px;
+}
+
 .up{
     width: 160px;
     height: 200px;

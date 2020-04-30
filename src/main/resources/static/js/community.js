@@ -49,6 +49,7 @@ function collapseComments(e) {
                         }).append($("<img/>", {
                             "class": "pull-left media-object img-circle",
                             "style": "width: 25px;height: 25px ",
+                            "href" : "/Personal/"+comment.user.id,
                             "src": comment.user.avatar
                         })).append($("<h5/>", {
                             "class": "media-heading",

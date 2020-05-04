@@ -34,7 +34,7 @@
                     <a href="/publish"  style="font-size: 16px;margin-top: 1px">提问</a>
                 </li>
                 <li th:if="${session.user !=null}">
-                    <a href="/profile/reolies" style="font-size: 16px;margin-top: 1px">通知 <span class="badge" style="background-color: #e36868;margin-top: -1px" th:class="${unread == 0}?'':'badge'" th:text="${unread == 0}?'':${unread}"></span></a>
+                    <a href="/profile/reolies" style="font-size: 16px;margin-top: 1px">通知 <span class="badge" style="background-color: #e36868;margin-top: -1px" th:class="${session.notice == 0}?'':'badge'" th:text="${session.notice == 0}?'':${session.notice}"></span></a>
                 </li>
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

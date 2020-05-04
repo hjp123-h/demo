@@ -52,10 +52,6 @@ public class IndexController {
         model.addAttribute("clientid",Clientid);
 
         User user = (User)httpServletRequest.getSession().getAttribute("user");
-        if (user != null){
-            Integer unread = noticeMapper.getUnread(user.getId());
-            model.addAttribute("unread",unread);
-        }
 
         //获取全部文章
         PaginationDTO pagination = questionService.selectAll(page,size,null);

@@ -1,6 +1,7 @@
 package com.hjp123.demo.interceptor;
 
 import com.hjp123.demo.bean.User;
+import com.hjp123.demo.mapper.NoticeMapper;
 import com.hjp123.demo.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NoticeMapper noticeMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -39,6 +42,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     //判断对象不为空的情况下 放入session
                     if(user != null){
                         request.getSession().setAttribute("user",user);
+                        Integer unread = noticeMapper.getUnread(user.getId());
+                        request.getSession().setAttribute("notice",unread);
                     }
                     break;
                 }

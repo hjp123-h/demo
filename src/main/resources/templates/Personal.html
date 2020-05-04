@@ -38,7 +38,9 @@
                 </a>
             </div>
             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" id="noelbutton" th:if="${session.user != null && session.user.getId() != id}">
-                <el-button type="primary" style="margin-top: 65px;margin-left: -87px;" plain>关注ta</el-button>
+                <a th:href="|/attention/${pagination.getDynamicDTOS().get(0).getUser().id}|">
+                    <el-button type="primary" style="margin-top: 65px;margin-left: -87px;" plain>关注ta</el-button>
+                </a>
             </div>
         </div>
     </div>
@@ -57,9 +59,11 @@
                 <li role="presentation"><a href="#">关注</a></li>
             </ul>
 
+            <h4 class="text-center" style="padding-top: 20px;margin-bottom: -40px;" th:if="${pagination.getTotalPage() == 0}">这位用户动态空空的</h4>
+
             <!-- 动态 -->
             <div style="margin-left: -50px" th:each="dynamic : ${pagination.getDynamicDTOS()}">
-                <div th:if="${dynamic.getCtype() == 0}">
+                <div th:if="${dynamic.getCtype() == 0 && dynamic.getQid() != 0}">
                     <h5 style="padding-bottom: 5px">发布了新文章</h5>
                     <div class="media-left">
                         <a th:href="|/Personal/${dynamic.user.id}|">
@@ -79,8 +83,9 @@
                         <span th:text="${#dates.format(dynamic.getGmtCreate(),'yyyy-MM-d HH:mm')}"></span>发布
                     </span>
                     </div>
+                    <hr>
                 </div>
-                <div th:if="${dynamic.getCtype() == 1}">
+                <div th:if="${dynamic.getCtype() == 1 && dynamic.getCcommentator() != 0}">
                     <h5 style="padding-bottom: 5px" th:text="|${#dates.format(dynamic.getCcomment().getGmtCreate(),'yyyy-MM-d HH:mm')} 回复了|"></h5>
                     <div class="media-left" >
                         <a th:href="|/Personal/${dynamic.getCommentuser().getId()}|">
@@ -100,12 +105,12 @@
                         <span th:text="${#dates.format(dynamic.getCommentquestion().getGmtCreate(),'yyyy-MM-d HH:mm')}"></span>发布
                     </span>
                     </div>
+                    <hr>
                 </div>
-                <hr>
+
             </div>
 
             <!-- 分页 -->
-            <h4 class="text-center" style="padding-top: 20px;margin-bottom: -40px;" th:if="${pagination.getTotalPage() == 0}">这位用户动态空空的</h4>
             <nav aria-label="Page navigation" style="text-align: center" th:if="${pagination.getTotalPage() > 0 && pagination.getDynamicDTOS().size() > 0}">
 
                 <ul class="pagination pagination-lg">

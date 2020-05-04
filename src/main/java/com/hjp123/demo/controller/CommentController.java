@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 回复类
+ */
+
 @Controller
 public class CommentController {
 

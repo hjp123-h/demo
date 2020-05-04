@@ -3,6 +3,7 @@ package com.hjp123.demo.controller;
 import com.hjp123.demo.bean.User;
 import com.hjp123.demo.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,8 @@ public class SignUpController {
     @Autowired
     private UserMapper userMapper;
 
-    private String avaterURL = "http://demohjp.oss-cn-beijing.aliyuncs.com/2-9636b13945b9ccf345bc98d0d81074eb.jpg?Expires=1588921063&OSSAccessKeyId=LTAI4FrLFYKADDNuceHGZSw2&Signature=cAI16K67Ples0UOIDREyEiv2vpw%3D";
+    @Value("${default.avatar}")
+    private String avaterURL;
 
     /**
      *使用Ajax登陆

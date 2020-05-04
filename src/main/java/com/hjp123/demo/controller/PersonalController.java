@@ -19,9 +19,6 @@ public class PersonalController {
     @Autowired
     private PersonalService personalService;
 
-    @Autowired
-    private DynamicMapper dynamicMapper;
-
     @RequestMapping("/Personal/{id}")
     public String PersonalIndex(@PathVariable Long id,
                                 Model model,

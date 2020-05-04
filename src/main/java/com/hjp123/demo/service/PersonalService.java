@@ -33,7 +33,6 @@ public class PersonalService {
         PaginationDTO paginationDTO = new PaginationDTO();
         //获取用户总条数
         Integer totalCount = dynamicMapper.countById(userId);
-
         //调用分页工具类！！！！！！！！！！！！！！
         paginationDTO.setPagination(totalCount, page, size);
 

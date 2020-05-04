@@ -32,8 +32,8 @@ public class AuthorizeConteoller {
     private String Secret;
     @Value("${Github.setRedirect.uri}")
     private String Uri;
-    private String avaterURL = "http://demohjp.oss-cn-beijing.aliyuncs.com/2-9636b13945b9ccf345bc98d0d81074eb.jpg?Expires=1588921063&OSSAccessKeyId=LTAI4FrLFYKADDNuceHGZSw2&Signature=cAI16K67Ples0UOIDREyEiv2vpw%3D";
-
+    @Value("${default.avatar}")
+    private String avaterURL;
 
     @Autowired
     private UserMapper userMapper;
